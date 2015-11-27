@@ -1,18 +1,11 @@
 # coding: utf8
 from decimal import Decimal
-from django.core.exceptions import ValidationError
-
-
-__author__ = 'Demyanov Kirill'
-
 from django.db import models
 from orum_type import OrumType
 from period import Period
 
+__author__ = 'Demyanov Kirill'
 
-def validate_even(value):
-    if value <= 0:
-        raise ValidationError(u'Ошибка: %s. Значение должно быть больше нуля' % value)
 
 class Orum(models.Model):
     type = models.ForeignKey(OrumType)
@@ -24,7 +17,6 @@ class Orum(models.Model):
     ratio = models.DecimalField(u'Коэффицент потребления',
                                 decimal_places=6,
                                 max_digits=8,
-                                validators=[validate_even],
                                 default=1
                                 )
     installation_in_period = models.ForeignKey(Period, related_name='installation_in_period')
