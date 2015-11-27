@@ -1,0 +1,1026 @@
+[
+{
+  "fields": {
+    "formula": 2,
+    "title": "\u0423\u043b\u0438\u0447\u043d\u043e\u0435 \u043e\u0441\u0432\u0435\u0449\u0435\u043d\u0438\u0435"
+  },
+  "model": "energy.orumtype",
+  "pk": 1
+},
+{
+  "fields": {
+    "formula": 2,
+    "title": "\u041c\u0435\u0441\u0442\u0430 \u043e\u0431\u0449\u0435\u0433\u043e \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f"
+  },
+  "model": "energy.orumtype",
+  "pk": 2
+},
+{
+  "fields": {
+    "formula": 3,
+    "title": "\u0414\u043d\u0435\u0439 \u043f\u043e \u0442\u0430\u0431\u0435\u043b\u044e \u0440\u0430\u0431\u043e\u0447\u0435\u0433\u043e \u0432\u0440\u0435\u043c\u0435\u043d"
+  },
+  "model": "energy.orumtype",
+  "pk": 3
+},
+{
+  "fields": {
+    "formula": 3,
+    "title": "\u0414\u043d\u0435\u0439 \u0441 \u0434\u0432\u0443\u043c\u044f \u0432\u044b\u0445\u043e\u0434\u043d\u044b\u043c\u0438 \u0432 \u043d\u0435\u0434\u0435\u043b"
+  },
+  "model": "energy.orumtype",
+  "pk": 4
+},
+{
+  "fields": {
+    "formula": 3,
+    "title": "\u0414\u043d\u0435\u0439 \u0441 \u043e\u0434\u043d\u0438\u043c \u0432\u044b\u0445\u043e\u0434\u043d\u044b\u043c \u0432 \u043d\u0435\u0434\u0435\u043b\u044e"
+  },
+  "model": "energy.orumtype",
+  "pk": 5
+},
+{
+  "fields": {
+    "formula": 3,
+    "title": "\u0414\u043d\u0435\u0439 \u043f\u043e \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u044e"
+  },
+  "model": "energy.orumtype",
+  "pk": 6
+},
+{
+  "fields": {
+    "formula": 1,
+    "title": "\u041f\u043e\u0441\u0442\u043e\u044f\u043d\u043d\u044b\u0439 \u0440\u0430\u0441\u0445\u043e\u0434"
+  },
+  "model": "energy.orumtype",
+  "pk": 7
+},
+{
+  "fields": {
+    "formula": 2,
+    "title": "\u041c\u041e\u041f \u043d\u0430 \u0447\u0435\u043b\u043e\u0432\u0435\u043a\u0430"
+  },
+  "model": "energy.orumtype",
+  "pk": 8
+},
+{
+  "fields": {
+    "faza_id": 201001,
+    "date_start": "2010-01-01",
+    "last_period": null,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 1
+},
+{
+  "fields": {
+    "faza_id": 201002,
+    "date_start": "2010-02-01",
+    "last_period": 1,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 2
+},
+{
+  "fields": {
+    "faza_id": 201003,
+    "date_start": "2010-03-01",
+    "last_period": 2,
+    "title": "\u041c\u0430\u0440\u0442 2010"
+  },
+  "model": "energy.period",
+  "pk": 3
+},
+{
+  "fields": {
+    "faza_id": 201004,
+    "date_start": "2010-04-01",
+    "last_period": 3,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 4
+},
+{
+  "fields": {
+    "faza_id": 201005,
+    "date_start": "2010-05-01",
+    "last_period": 4,
+    "title": "\u041c\u0430\u0439 2010"
+  },
+  "model": "energy.period",
+  "pk": 5
+},
+{
+  "fields": {
+    "faza_id": 201006,
+    "date_start": "2010-06-01",
+    "last_period": 5,
+    "title": "\u0418\u044e\u043d\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 6
+},
+{
+  "fields": {
+    "faza_id": 201007,
+    "date_start": "2010-07-01",
+    "last_period": 6,
+    "title": "\u0418\u044e\u043b\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 7
+},
+{
+  "fields": {
+    "faza_id": 201008,
+    "date_start": "2010-08-01",
+    "last_period": 7,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2010"
+  },
+  "model": "energy.period",
+  "pk": 8
+},
+{
+  "fields": {
+    "faza_id": 201009,
+    "date_start": "2010-09-01",
+    "last_period": 8,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 9
+},
+{
+  "fields": {
+    "faza_id": 201010,
+    "date_start": "2010-10-01",
+    "last_period": 9,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 10
+},
+{
+  "fields": {
+    "faza_id": 201011,
+    "date_start": "2010-11-01",
+    "last_period": 10,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 11
+},
+{
+  "fields": {
+    "faza_id": 201012,
+    "date_start": "2010-12-01",
+    "last_period": 11,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2010"
+  },
+  "model": "energy.period",
+  "pk": 12
+},
+{
+  "fields": {
+    "faza_id": 201101,
+    "date_start": "2011-01-01",
+    "last_period": 12,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 13
+},
+{
+  "fields": {
+    "faza_id": 201102,
+    "date_start": "2011-02-01",
+    "last_period": 13,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 14
+},
+{
+  "fields": {
+    "faza_id": 201103,
+    "date_start": "2011-03-01",
+    "last_period": 14,
+    "title": "\u041c\u0430\u0440\u0442 2011"
+  },
+  "model": "energy.period",
+  "pk": 15
+},
+{
+  "fields": {
+    "faza_id": 201104,
+    "date_start": "2011-04-01",
+    "last_period": 15,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 16
+},
+{
+  "fields": {
+    "faza_id": 201105,
+    "date_start": "2011-05-01",
+    "last_period": 16,
+    "title": "\u041c\u0430\u0439 2011"
+  },
+  "model": "energy.period",
+  "pk": 17
+},
+{
+  "fields": {
+    "faza_id": 201106,
+    "date_start": "2011-06-01",
+    "last_period": 17,
+    "title": "\u0418\u044e\u043d\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 18
+},
+{
+  "fields": {
+    "faza_id": 201107,
+    "date_start": "2011-07-01",
+    "last_period": 18,
+    "title": "\u0418\u044e\u043b\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 19
+},
+{
+  "fields": {
+    "faza_id": 201108,
+    "date_start": "2011-08-01",
+    "last_period": 19,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2011"
+  },
+  "model": "energy.period",
+  "pk": 20
+},
+{
+  "fields": {
+    "faza_id": 201109,
+    "date_start": "2011-09-01",
+    "last_period": 20,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 21
+},
+{
+  "fields": {
+    "faza_id": 201110,
+    "date_start": "2011-10-01",
+    "last_period": 21,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 22
+},
+{
+  "fields": {
+    "faza_id": 201111,
+    "date_start": "2011-11-01",
+    "last_period": 22,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 23
+},
+{
+  "fields": {
+    "faza_id": 201112,
+    "date_start": "2011-12-01",
+    "last_period": 23,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2011"
+  },
+  "model": "energy.period",
+  "pk": 24
+},
+{
+  "fields": {
+    "faza_id": 201201,
+    "date_start": "2012-01-01",
+    "last_period": 24,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 25
+},
+{
+  "fields": {
+    "faza_id": 201202,
+    "date_start": "2012-02-01",
+    "last_period": 25,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 26
+},
+{
+  "fields": {
+    "faza_id": 201203,
+    "date_start": "2012-03-01",
+    "last_period": 26,
+    "title": "\u041c\u0430\u0440\u0442 2012"
+  },
+  "model": "energy.period",
+  "pk": 27
+},
+{
+  "fields": {
+    "faza_id": 201204,
+    "date_start": "2012-04-01",
+    "last_period": 27,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 28
+},
+{
+  "fields": {
+    "faza_id": 201205,
+    "date_start": "2012-05-01",
+    "last_period": 28,
+    "title": "\u041c\u0430\u0439 2012"
+  },
+  "model": "energy.period",
+  "pk": 29
+},
+{
+  "fields": {
+    "faza_id": 201206,
+    "date_start": "2012-06-01",
+    "last_period": 29,
+    "title": "\u0418\u044e\u043d\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 30
+},
+{
+  "fields": {
+    "faza_id": 201207,
+    "date_start": "2012-07-01",
+    "last_period": 30,
+    "title": "\u0418\u044e\u043b\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 31
+},
+{
+  "fields": {
+    "faza_id": 201208,
+    "date_start": "2012-08-01",
+    "last_period": 31,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2012"
+  },
+  "model": "energy.period",
+  "pk": 32
+},
+{
+  "fields": {
+    "faza_id": 201209,
+    "date_start": "2012-09-01",
+    "last_period": 32,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 33
+},
+{
+  "fields": {
+    "faza_id": 201210,
+    "date_start": "2012-10-01",
+    "last_period": 33,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 34
+},
+{
+  "fields": {
+    "faza_id": 201211,
+    "date_start": "2012-11-01",
+    "last_period": 34,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 35
+},
+{
+  "fields": {
+    "faza_id": 201212,
+    "date_start": "2012-12-01",
+    "last_period": 35,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2012"
+  },
+  "model": "energy.period",
+  "pk": 36
+},
+{
+  "fields": {
+    "faza_id": 201301,
+    "date_start": "2013-01-01",
+    "last_period": 36,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 37
+},
+{
+  "fields": {
+    "faza_id": 201302,
+    "date_start": "2013-02-01",
+    "last_period": 37,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 38
+},
+{
+  "fields": {
+    "faza_id": 201303,
+    "date_start": "2013-03-01",
+    "last_period": 38,
+    "title": "\u041c\u0430\u0440\u0442 2013"
+  },
+  "model": "energy.period",
+  "pk": 39
+},
+{
+  "fields": {
+    "faza_id": 201304,
+    "date_start": "2013-04-01",
+    "last_period": 39,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 40
+},
+{
+  "fields": {
+    "faza_id": 201305,
+    "date_start": "2013-05-01",
+    "last_period": 40,
+    "title": "\u041c\u0430\u0439 2013"
+  },
+  "model": "energy.period",
+  "pk": 41
+},
+{
+  "fields": {
+    "faza_id": 201306,
+    "date_start": "2013-06-01",
+    "last_period": 41,
+    "title": "\u0418\u044e\u043d\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 42
+},
+{
+  "fields": {
+    "faza_id": 201307,
+    "date_start": "2013-07-01",
+    "last_period": 42,
+    "title": "\u0418\u044e\u043b\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 43
+},
+{
+  "fields": {
+    "faza_id": 201308,
+    "date_start": "2013-08-01",
+    "last_period": 43,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2013"
+  },
+  "model": "energy.period",
+  "pk": 44
+},
+{
+  "fields": {
+    "faza_id": 201309,
+    "date_start": "2013-09-01",
+    "last_period": 44,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 45
+},
+{
+  "fields": {
+    "faza_id": 201310,
+    "date_start": "2013-10-01",
+    "last_period": 45,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 46
+},
+{
+  "fields": {
+    "faza_id": 201311,
+    "date_start": "2013-11-01",
+    "last_period": 46,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 47
+},
+{
+  "fields": {
+    "faza_id": 201312,
+    "date_start": "2013-12-01",
+    "last_period": 47,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2013"
+  },
+  "model": "energy.period",
+  "pk": 48
+},
+{
+  "fields": {
+    "faza_id": 201401,
+    "date_start": "2014-01-01",
+    "last_period": 48,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 49
+},
+{
+  "fields": {
+    "faza_id": 201402,
+    "date_start": "2014-02-01",
+    "last_period": 49,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 50
+},
+{
+  "fields": {
+    "faza_id": 201403,
+    "date_start": "2014-03-01",
+    "last_period": 50,
+    "title": "\u041c\u0430\u0440\u0442 2014"
+  },
+  "model": "energy.period",
+  "pk": 51
+},
+{
+  "fields": {
+    "faza_id": 201404,
+    "date_start": "2014-04-01",
+    "last_period": 51,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 52
+},
+{
+  "fields": {
+    "faza_id": 201405,
+    "date_start": "2014-05-01",
+    "last_period": 52,
+    "title": "\u041c\u0430\u0439 2014"
+  },
+  "model": "energy.period",
+  "pk": 53
+},
+{
+  "fields": {
+    "faza_id": 201406,
+    "date_start": "2014-06-01",
+    "last_period": 53,
+    "title": "\u0418\u044e\u043d\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 54
+},
+{
+  "fields": {
+    "faza_id": 201407,
+    "date_start": "2014-07-01",
+    "last_period": 54,
+    "title": "\u0418\u044e\u043b\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 55
+},
+{
+  "fields": {
+    "faza_id": 201408,
+    "date_start": "2014-08-01",
+    "last_period": 55,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2014"
+  },
+  "model": "energy.period",
+  "pk": 56
+},
+{
+  "fields": {
+    "faza_id": 201409,
+    "date_start": "2014-09-01",
+    "last_period": 56,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 57
+},
+{
+  "fields": {
+    "faza_id": 201410,
+    "date_start": "2014-10-01",
+    "last_period": 57,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 58
+},
+{
+  "fields": {
+    "faza_id": 201411,
+    "date_start": "2014-11-01",
+    "last_period": 58,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 59
+},
+{
+  "fields": {
+    "faza_id": 201412,
+    "date_start": "2014-12-01",
+    "last_period": 59,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2014"
+  },
+  "model": "energy.period",
+  "pk": 60
+},
+{
+  "fields": {
+    "faza_id": 201501,
+    "date_start": "2015-01-01",
+    "last_period": 60,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 61
+},
+{
+  "fields": {
+    "faza_id": 201502,
+    "date_start": "2015-02-01",
+    "last_period": 61,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 62
+},
+{
+  "fields": {
+    "faza_id": 201503,
+    "date_start": "2015-03-01",
+    "last_period": 62,
+    "title": "\u041c\u0430\u0440\u0442 2015"
+  },
+  "model": "energy.period",
+  "pk": 63
+},
+{
+  "fields": {
+    "faza_id": 201504,
+    "date_start": "2015-04-01",
+    "last_period": 63,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 64
+},
+{
+  "fields": {
+    "faza_id": 201505,
+    "date_start": "2015-05-01",
+    "last_period": 64,
+    "title": "\u041c\u0430\u0439 2015"
+  },
+  "model": "energy.period",
+  "pk": 65
+},
+{
+  "fields": {
+    "faza_id": 201506,
+    "date_start": "2015-06-01",
+    "last_period": 65,
+    "title": "\u0418\u044e\u043d\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 66
+},
+{
+  "fields": {
+    "faza_id": 201507,
+    "date_start": "2015-07-01",
+    "last_period": 66,
+    "title": "\u0418\u044e\u043b\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 67
+},
+{
+  "fields": {
+    "faza_id": 201508,
+    "date_start": "2015-08-01",
+    "last_period": 67,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2015"
+  },
+  "model": "energy.period",
+  "pk": 68
+},
+{
+  "fields": {
+    "faza_id": 201509,
+    "date_start": "2015-09-01",
+    "last_period": 68,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 69
+},
+{
+  "fields": {
+    "faza_id": 201510,
+    "date_start": "2015-10-01",
+    "last_period": 69,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 70
+},
+{
+  "fields": {
+    "faza_id": 201511,
+    "date_start": "2015-11-01",
+    "last_period": 70,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 71
+},
+{
+  "fields": {
+    "faza_id": 201512,
+    "date_start": "2015-12-01",
+    "last_period": 71,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2015"
+  },
+  "model": "energy.period",
+  "pk": 72
+},
+{
+  "fields": {
+    "faza_id": 201601,
+    "date_start": "2016-01-01",
+    "last_period": 72,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 73
+},
+{
+  "fields": {
+    "faza_id": 201602,
+    "date_start": "2016-02-01",
+    "last_period": 73,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 74
+},
+{
+  "fields": {
+    "faza_id": 201603,
+    "date_start": "2016-03-01",
+    "last_period": 74,
+    "title": "\u041c\u0430\u0440\u0442 2016"
+  },
+  "model": "energy.period",
+  "pk": 75
+},
+{
+  "fields": {
+    "faza_id": 201604,
+    "date_start": "2016-04-01",
+    "last_period": 75,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 76
+},
+{
+  "fields": {
+    "faza_id": 201605,
+    "date_start": "2016-05-01",
+    "last_period": 76,
+    "title": "\u041c\u0430\u0439 2016"
+  },
+  "model": "energy.period",
+  "pk": 77
+},
+{
+  "fields": {
+    "faza_id": 201606,
+    "date_start": "2016-06-01",
+    "last_period": 77,
+    "title": "\u0418\u044e\u043d\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 78
+},
+{
+  "fields": {
+    "faza_id": 201607,
+    "date_start": "2016-07-01",
+    "last_period": 78,
+    "title": "\u0418\u044e\u043b\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 79
+},
+{
+  "fields": {
+    "faza_id": 201608,
+    "date_start": "2016-08-01",
+    "last_period": 79,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2016"
+  },
+  "model": "energy.period",
+  "pk": 80
+},
+{
+  "fields": {
+    "faza_id": 201609,
+    "date_start": "2016-09-01",
+    "last_period": 80,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 81
+},
+{
+  "fields": {
+    "faza_id": 201610,
+    "date_start": "2016-10-01",
+    "last_period": 81,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 82
+},
+{
+  "fields": {
+    "faza_id": 201611,
+    "date_start": "2016-11-01",
+    "last_period": 82,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 83
+},
+{
+  "fields": {
+    "faza_id": 201612,
+    "date_start": "2016-12-01",
+    "last_period": 83,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2016"
+  },
+  "model": "energy.period",
+  "pk": 84
+},
+{
+  "fields": {
+    "faza_id": 201701,
+    "date_start": "2017-01-01",
+    "last_period": 84,
+    "title": "\u042f\u043d\u0432\u0430\u0440\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 85
+},
+{
+  "fields": {
+    "faza_id": 201702,
+    "date_start": "2017-02-01",
+    "last_period": 85,
+    "title": "\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 86
+},
+{
+  "fields": {
+    "faza_id": 201703,
+    "date_start": "2017-03-01",
+    "last_period": 86,
+    "title": "\u041c\u0430\u0440\u0442 2017"
+  },
+  "model": "energy.period",
+  "pk": 87
+},
+{
+  "fields": {
+    "faza_id": 201704,
+    "date_start": "2017-04-01",
+    "last_period": 87,
+    "title": "\u0410\u043f\u0440\u0435\u043b\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 88
+},
+{
+  "fields": {
+    "faza_id": 201705,
+    "date_start": "2017-05-01",
+    "last_period": 88,
+    "title": "\u041c\u0430\u0439 2017"
+  },
+  "model": "energy.period",
+  "pk": 89
+},
+{
+  "fields": {
+    "faza_id": 201706,
+    "date_start": "2017-06-01",
+    "last_period": 89,
+    "title": "\u0418\u044e\u043d\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 90
+},
+{
+  "fields": {
+    "faza_id": 201707,
+    "date_start": "2017-07-01",
+    "last_period": 90,
+    "title": "\u0418\u044e\u043b\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 91
+},
+{
+  "fields": {
+    "faza_id": 201708,
+    "date_start": "2017-08-01",
+    "last_period": 91,
+    "title": "\u0410\u0432\u0433\u0443\u0441\u0442 2017"
+  },
+  "model": "energy.period",
+  "pk": 92
+},
+{
+  "fields": {
+    "faza_id": 201709,
+    "date_start": "2017-09-01",
+    "last_period": 92,
+    "title": "\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 93
+},
+{
+  "fields": {
+    "faza_id": 201710,
+    "date_start": "2017-10-01",
+    "last_period": 93,
+    "title": "\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 94
+},
+{
+  "fields": {
+    "faza_id": 201711,
+    "date_start": "2017-11-01",
+    "last_period": 94,
+    "title": "\u041d\u043e\u044f\u0431\u0440\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 95
+},
+{
+  "fields": {
+    "faza_id": 201712,
+    "date_start": "2017-12-01",
+    "last_period": 95,
+    "title": "\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2017"
+  },
+  "model": "energy.period",
+  "pk": 96
+}
+]

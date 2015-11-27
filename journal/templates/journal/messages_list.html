@@ -1,0 +1,76 @@
+{% extends 'journal/base.html' %}
+
+{% block title  %}
+    Исходящие служебные записки
+{% endblock %}
+
+{% block content %}
+    <div class="row" style="margin:5px">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Поиск</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div>
+    <div class="row" style="margin:5px">
+        <div class="col-md-1 col-md-offset-11">
+            <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">Добавить запись</button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Добавление новой записи</h4>
+              </div>
+              <div class="modal-body">
+                  много текста
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Добавить</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div class="row">
+        {% if messages_list %}
+            <table class="table text-center table-striped table-hover">
+                <tr>
+                    <th class="text-center">Номер</th>
+                    <th class="text-center">Дата регистрации</th>
+                    <th class="text-center">Предмет</th>
+                    <th class="text-center">Приложения (всего стр)</th>
+                    <th class="text-center">Адресат</th>
+                    <th class="text-center">Исполнитель</th>
+                    <th class="text-center">Сведения об исполнении</th>
+                    <th class="text-center">Count</th>
+                </tr>
+                <tbody>
+                    {% for message in messages_list %}
+                        <tr>
+                            <td>{{ message.number }}</td>
+                            <td>{{ message.data }}</td>
+                            <td>{{ message.description }}</td>
+                            <td>{{ message.count }}</td>
+                            <td>{{ message.user_adr }}</td>
+                            <td>{{ message.user_ins }}</td>
+                            <td>{{ message.comment }}</td>
+                            <td>{{ message.get_count }}</td>
+{#                            <td><a href="{{ message.get_path_file.url }}">Открыть</a></td>#}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Записей нет</p>
+        {% endif %}
+    </div>
+{% endblock %}
