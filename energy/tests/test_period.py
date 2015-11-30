@@ -30,3 +30,8 @@ class PeriodTest(TestCase):
         self.assertTrue(self.periods[3].between(self.periods[1], self.periods[5]))
         self.assertTrue(self.periods[3].between(self.periods[3], self.periods[4]))
         self.assertTrue(self.periods[4].between(self.periods[2], None))
+        self.assertTrue(self.periods[2].between(self.periods[2], None))
+
+    def test_between_none(self):
+        """ Проверяемой временной линии не существует"""
+        self.assertFalse(self.periods[3].between(self.periods[3], self.periods[3]))
