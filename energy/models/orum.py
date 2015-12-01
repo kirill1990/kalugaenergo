@@ -1,6 +1,7 @@
 # coding: utf8
 from decimal import Decimal
 from django.db import models
+from django.db.models import Sum
 from orum_type import OrumType
 from period import Period
 
@@ -9,48 +10,62 @@ __author__ = 'Demyanov Kirill'
 
 class Orum(models.Model):
     type = models.ForeignKey(OrumType)
-    power = models.DecimalField(u'Установленная мощность',
-                                decimal_places=5,
-                                max_digits=14
-                                )
-    hours = models.PositiveIntegerField(u'Часы использования', default=1)
-    ratio = models.DecimalField(u'Коэффицент потребления',
-                                decimal_places=6,
-                                max_digits=8,
-                                default=1
-                                )
-    installation_in_period = models.ForeignKey(Period, related_name='installation_in_period')
-    removed_in_period = models.ForeignKey(Period,
-                                          related_name='removed_in_period',
-                                          null=True,
-                                          blank=True
-                                          )
 
-    def value(self, period):
+    def get_setting_in(self, period):
+        """
+        Получение setting за указанный период
+
+        :param period: Период, за который необходимо получить setting
+        :return: setting выбранного периода
+                 None - setting не найден
+        """
+        settings = [element for element in self.orumsetting_set.all() if element.is_working_in(period)]
+        return settings[0] if settings.__len__() > 0 else None
+
+    def get_correction_in(self, period):
+        """
+        Получение суммы корректировки kwh за указанный период
+
+        :param period: Период, за который необходимо получить корректировку
+        :return: kwh корректировки
+        """
+        correction = self.orumcorrection_set.filter(period=period).aggregate(Sum('kwh'))['kwh__sum']
+        return correction if correction else Decimal(0)
+
+    def get_date_use(self, period):
+        """
+        Получение date_use за указанный период
+
+        :param period: Период, за который необходимо получить date_use
+        :return: date_use выбранного периода
+                 None - date_use не найден
+        """
+        model_du = self.orumdateuse_set.filter(period=period).first()
+        return model_du.date_use if model_du else None
+
+    def value(self, period=Period.objects.get(pk=6)):
         """ description """
 
-        """ дата """
-        if not period.between(self.installation_in_period, self.removed_in_period):
+        setting = self.get_setting_in(period)
+        date_use = self.get_date_use(period)
+
+        if not setting or not date_use and self.type.formula in (2, 3):
             return None
 
-        """ вычисление """
-        orum_value = self.orumvalue_set.filter(period=period).first()
+        result = setting.ratio * setting.power
 
-        if not orum_value:
-            orum_value = self.orumvalue_set.create(period=period)
+        if self.type.formula in (2, 3):
+            result *= date_use
 
-        if orum_value:
-            test = {
-                1: self.power,
-                2: self.power * orum_value.date_use,
-                3: self.power * orum_value.date_use * self.hours,
-            }.get(self.type.formula) * self.ratio
+            if self.type.formula == 3:
+                result *= setting.hours
 
-            return round(Decimal(test) + orum_value.kwh, 6)
-        return 0
+        correction = self.get_correction_in(period)
+
+        return round(Decimal(result) + correction, 3)
 
     def __str__(self):
-        return u'%s %f/%d/%f' % (self.type.title, self.power, self.hours, self.ratio)
+        return u'%s: %i' % (self.type.title, self.pk)
 
     def __unicode__(self):
         return u"%s" % self.__str__()

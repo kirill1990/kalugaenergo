@@ -12,10 +12,8 @@ class Period(models.Model):
     faza_id = models.IntegerField('ID периодов в фазе', help_text='Шаблон yyyymm(201501)')
 
     def between(self, left, right):
-        if left.date_start <= self.date_start and (not right or self.date_start < right.date_start):
-            return True
-
-        return False
+        return True if left.date_start <= self.date_start and \
+                       (not right or self.date_start < right.date_start) else False
 
     def __str__(self):
         return self.title
