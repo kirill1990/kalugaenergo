@@ -1,11 +1,10 @@
 # coding: utf8
 from django.test import TestCase
-from energy.models import Orum, OrumType, Period, OrumValue
+from energy.models import Orum, OrumType, Period, OrumDateUse, OrumSetting, OrumCorrection
 
 __author__ = 'Demyanov Kirill'
 
-# Create your tests here.
-class OrumTest(TestCase):
+class TestOrum(TestCase):
     fixtures = ['energy_fixtures']
 
     def setUp(self):
@@ -18,22 +17,26 @@ class OrumTest(TestCase):
 
     def test_hours_default_equal_1(self):
         """ В орумах часы использования по умолчанию 1 """
-        orum = Orum.objects.create(type=self.types[1], power=0.0001, installation_in_period=self.periods[1])
-        self.assertEqual(orum.hours, 1)
+        orum = Orum.objects.create(type=self.types[1])
+        setting = OrumSetting.objects.create(orum=orum, power=3, ratio=1, installation_orum=self.periods[2])
+
+        self.assertEqual(setting.hours, 1)
 
     def test_ratio_default_equal_1(self):
         """ В орумах коэффициент по умолчанию 1 """
-        orum = Orum.objects.create(type=self.types[1], power=0.0001, installation_in_period=self.periods[1])
-        self.assertEqual(orum.ratio, 1)
+        orum = Orum.objects.create(type=self.types[1])
+        setting = OrumSetting.objects.create(orum=orum, power=3, installation_orum=self.periods[2])
+
+        self.assertEqual(setting.ratio, 1)
 
     def test_none_period(self):
         """ Запрос по периоду, в котором не было/нет орума """
-        orum = Orum(type=self.types[1], power=0.0001)
-        orum.installation_in_period = self.periods[3]
-        orum.removed_in_period = self.periods[5]
-        orum.save()
+        orum = Orum.objects.create(type=self.types[1])
+        setting = OrumSetting(orum=orum, power=3, ratio=1, installation_orum=self.periods[2])
+        setting.removed_orum = self.periods[5]
+        setting.save()
 
-        self.assertEqual(orum.value(self.periods[2]), None)
+        self.assertEqual(orum.value(self.periods[1]), None)
         self.assertEqual(orum.value(self.periods[5]), None)
         self.assertEqual(orum.value(self.periods[6]), None)
 
@@ -47,18 +50,20 @@ class OrumTest(TestCase):
         """
 
         """ Задана только [Мощность] """
-        orum = Orum.objects.create(type=self.types[1], power=0.0001, installation_in_period=self.periods[1])
+        orum = Orum.objects.create(type=self.types[1])
+        setting = OrumSetting.objects.create(orum=orum, power=0.01, installation_orum=self.periods[1])
         self.assertEqual(orum.type.formula, 1)
-        self.assertEqual(orum.value(self.periods[1]), 0.0001)
-        self.assertEqual(orum.value(self.periods[2]), 0.0001)
+        self.assertEqual(orum.value(self.periods[1]), 0.01)
+        self.assertEqual(orum.value(self.periods[2]), 0.01)
 
         """ + [Коэффициент] """
-        orum.ratio = 0.1
-        self.assertEqual(orum.value(self.periods[3]), 0.00001)
+        setting.ratio = 0.1
+        setting.save()
+        self.assertEqual(orum.value(self.periods[3]), 0.001)
 
         """ + [Корректировка в kwh] """
-        OrumValue.objects.create(orum=orum, period=self.periods[4], kwh=1.34)
-        self.assertEqual(orum.value(self.periods[4]), 1.34001)
+        OrumCorrection.objects.create(orum=orum, period=self.periods[4], kwh=1.34)
+        self.assertEqual(orum.value(self.periods[4]), 1.341)
 
     def test_value_orum_formula_2(self):
         """
@@ -69,19 +74,17 @@ class OrumTest(TestCase):
                         * [Коэффициент]
                         + [Корректировка в kwh]
         """
-        orum = Orum.objects.create(type=self.types[2], power=0.0001, installation_in_period=self.periods[1])
+        orum = Orum.objects.create(type=self.types[2])
+        OrumSetting.objects.create(orum=orum, power=0.01, installation_orum=self.periods[1])
         self.assertEqual(orum.type.formula, 2)
 
-        """ Задана только [Мощность] """
-        self.assertEqual(orum.value(self.periods[1]), 0.0001)
+        """ Задана [Мощность] и [Количество дней в использование] """
+        OrumDateUse.objects.create(orum=orum, period=self.periods[1], date_use=3)
+        self.assertEqual(orum.value(self.periods[1]), 0.03)
 
-        """ Задана только [Мощность] """
-        orum = Orum.objects.create(type=self.types[2], power=0.0001, installation_in_period=self.periods[1])
-        OrumValue.objects.create(orum=orum, period=self.periods[1], date_use=3)
-        self.assertEqual(orum.value(self.periods[1]), 0.0003)
-
-        OrumValue.objects.create(orum=orum, period=self.periods[2], date_use=3, kwh=3.23)
-        self.assertEqual(orum.value(self.periods[2]), 3.2303)
+        """ Задана [Мощность], [Количество дней в использование], [Корректировка в kwh] """
+        OrumCorrection.objects.create(orum=orum, period=self.periods[1], kwh=3.23)
+        self.assertEqual(orum.value(self.periods[1]), 3.26)
 
     def test_value_orum_formula_3(self):
         """
@@ -93,25 +96,58 @@ class OrumTest(TestCase):
                     * [Коэффициент]
                     + [Корректировка в kwh]
         """
-        orum = Orum.objects.create(type=self.types[3], power=0.0001, installation_in_period=self.periods[1])
-
-        """ Задана только [Мощность] """
+        orum = Orum.objects.create(type=self.types[3])
+        OrumSetting.objects.create(orum=orum, power=0.01, installation_orum=self.periods[1], hours=2)
         self.assertEqual(orum.type.formula, 3)
-        self.assertEqual(orum.value(self.periods[1]), 0.0001)
 
-        """ Задана только [Мощность] и [Количество дней в использование] """
-        orum = Orum.objects.create(type=self.types[3], power=0.0001, installation_in_period=self.periods[1])
-        OrumValue.objects.create(orum=orum, period=self.periods[1], date_use=3)
-        self.assertEqual(orum.value(self.periods[1]), 0.0003)
+        """ Задана [Мощность], [Количество дней в использование] """
+        OrumDateUse.objects.create(orum=orum, period=self.periods[1], date_use=3)
+        self.assertEqual(orum.value(self.periods[1]), 0.06)
 
-        OrumValue.objects.create(orum=orum, period=self.periods[2], date_use=3, kwh=3.23)
-        self.assertEqual(orum.value(self.periods[2]), 3.2303)
+        """ Задана [Мощность], [Количество дней в использование], [Корректировка в kwh] """
+        OrumCorrection.objects.create(orum=orum, period=self.periods[1], kwh=3.23)
+        self.assertEqual(orum.value(self.periods[1]), 3.29)
 
-        """ c [Время использования в день] """
-        orum = Orum.objects.create(type=self.types[3], power=0.0001, hours=3, installation_in_period=self.periods[1])
-        OrumValue.objects.create(orum=orum, period=self.periods[1], date_use=3)
-        self.assertEqual(orum.value(self.periods[1]), 0.0009)
+    def test_get_date_use(self):
+        """
+        Проверяет правильность получения объекта date_use
+        """
+        orum = Orum.objects.create(type=self.types[2])
+        OrumDateUse.objects.create(orum=orum, period=self.periods[2], date_use=3)
 
-        OrumValue.objects.create(orum=orum, period=self.periods[2], date_use=3, kwh=3.23)
-        self.assertEqual(orum.value(self.periods[2]), 3.2309)
+        self.assertIsNotNone(orum.get_date_use(period=self.periods[2]))
+        self.assertEqual(orum.get_date_use(period=self.periods[2]), 3)
+        self.assertIsNone(orum.get_date_use(period=self.periods[3]))
 
+    def test_get_setting_in(self):
+        """
+        Проверяет правильность получения объекта setting
+        """
+        orum = Orum.objects.create(type=self.types[2])
+
+        setting = OrumSetting(orum=orum, power=3, hours=2, ratio=0.5)
+        setting.installation_orum = self.periods[5]
+        setting.removed_orum = self.periods[7]
+        setting.save()
+        setting = OrumSetting(orum=orum, power=3, hours=2, ratio=0.5)
+        setting.installation_orum = self.periods[2]
+        setting.removed_orum = self.periods[5]
+        setting.save()
+
+        self.assertEqual(orum.get_setting_in(self.periods[3]), setting)
+        self.assertIsNone(orum.get_setting_in(self.periods[1]))
+        self.assertIsNone(orum.get_setting_in(self.periods[7]))
+        self.assertIsNone(orum.get_setting_in(self.periods[8]))
+
+    def test_get_correction_in(self):
+        """
+        Проверяет правильность получения суммы корректировки kwh
+        """
+        orum = Orum.objects.create(type=self.types[2])
+        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=3.0)
+        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=2.5)
+        OrumCorrection.objects.create(orum=orum, period=self.periods[5], kwh=4.0)
+
+        self.assertEqual(orum.get_correction_in(self.periods[3]), 5.5)
+        self.assertEqual(orum.get_correction_in(self.periods[2]), 0)
+        self.assertEqual(orum.get_correction_in(self.periods[5]), 4)
