@@ -72,17 +72,17 @@ class Orum(models.Model):
         if not setting or not date_use and self.type.formula in (2, 3):
             return None
 
-        result = setting.ratio * setting.power
+        kwh = setting.ratio * setting.power
 
         if self.type.formula in (2, 3):
-            result *= date_use
+            kwh *= date_use
 
             if self.type.formula == 3:
-                result *= setting.hours
+                kwh *= setting.hours
 
         correction = self.get_correction_in(period)
 
-        return round(Decimal(result) + correction, 3)
+        return round(Decimal(kwh) + correction, 3)
 
     def __str__(self):
         return u'%s: %i' % (self.type.title, self.pk)
