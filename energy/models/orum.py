@@ -3,7 +3,6 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Sum
 from orum_type import OrumType
-from period import Period
 
 __author__ = 'Demyanov Kirill'
 
@@ -13,9 +12,9 @@ class Orum(models.Model):
 
     def get_setting_in(self, period):
         """
-        Получение setting за указанный период
+        Предоставляет setting за указанный период
 
-        :param period: Период, за который необходимо получить setting
+        :param period: период, за который необходимо получить setting
         :return: setting выбранного периода
                  None - setting не найден
         """
@@ -24,9 +23,9 @@ class Orum(models.Model):
 
     def get_correction_in(self, period):
         """
-        Получение суммы корректировки kwh за указанный период
+        Предоставляет суммы корректировки kwh за указанный период
 
-        :param period: Период, за который необходимо получить корректировку
+        :param period: период, за который необходимо получить корректировку
         :return: kwh корректировки
         """
         correction = self.orumcorrection_set.filter(period=period).aggregate(Sum('kwh'))['kwh__sum']
@@ -34,17 +33,38 @@ class Orum(models.Model):
 
     def get_date_use(self, period):
         """
-        Получение date_use за указанный период
+        Предоставляет date_use за указанный период
 
-        :param period: Период, за который необходимо получить date_use
+        :param period: период, за который необходимо получить date_use
         :return: date_use выбранного периода
                  None - date_use не найден
         """
         model_du = self.orumdateuse_set.filter(period=period).first()
         return model_du.date_use if model_du else None
 
-    def value(self, period=Period.objects.get(pk=6)):
-        """ description """
+    def get_kwh_in(self, period):
+        """
+        Предоставляет потребление в kwh за указанный период
+
+        формула 1:
+            kwh = [Мощность]
+                    * [Коэффициент]
+                    + [Корректировка в kwh]
+        формула 2:
+            kwh = [Мощность]
+                    * [Количество дней в использование]
+                    * [Коэффициент]
+                    + [Корректировка в kwh]
+        формула 3:
+            kwh = [Мощность]
+                    * [Количество дней в использование]
+                    * [Время использования в день]
+                    * [Коэффициент]
+                    + [Корректировка в kwh]
+
+        :param period: период, за который необходимо получить потребление
+        :return: потребление в kwh за выбранный период
+        """
 
         setting = self.get_setting_in(period)
         date_use = self.get_date_use(period)
