@@ -1,0 +1,25 @@
+[
+{
+  "fields": {
+    "digits": 7,
+    "check_period": 10,
+    "accuracy_class": 4,
+    "old_id": 12153,
+    "tariff": 1,
+    "title": "\u041c\u0435\u0440\u043a\u0443\u0440\u0438\u0439 230ART-02",
+    "direct": 1,
+    "comment": null,
+    "phase": 1,
+    "replace_period": 30,
+    "voltage": "3*230/400",
+    "amperage": "10(100)",
+    "active": true,
+    "type_of_energy": 2,
+    "type_of_meter": 1,
+    "decimals": 1,
+    "check": true
+  },
+  "model": "energy.meterpassport",
+  "pk": 1
+}
+]
