@@ -144,10 +144,10 @@ class TestOrum(TestCase):
         Проверяет правильность получения суммы корректировки kwh
         """
         orum = Orum.objects.create(type=self.types[2])
-        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=3.0)
-        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=2.5)
+        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=3.001)
+        OrumCorrection.objects.create(orum=orum, period=self.periods[3], kwh=2.001)
         OrumCorrection.objects.create(orum=orum, period=self.periods[5], kwh=4.0)
 
-        self.assertEqual(orum.get_correction_in(self.periods[3]), 5.5)
+        self.assertEqual(orum.get_correction_in(self.periods[3]), 5.002)
         self.assertEqual(orum.get_correction_in(self.periods[2]), 0)
         self.assertEqual(orum.get_correction_in(self.periods[5]), 4)
