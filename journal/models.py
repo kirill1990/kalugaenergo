@@ -50,7 +50,8 @@ class Document(models.Model):
     #     super
 
     def __unicode__(self):
-        return u"%s" % self.__str__()
+        return u"%s" % self.__str__
 
+    @property
     def __str__(self):
         return self.title

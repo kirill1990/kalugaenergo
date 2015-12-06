@@ -9,7 +9,13 @@ __author__ = 'Demyanov Kirill'
 class Point(models.Model):
     name = models.CharField('Наименование точки учета', max_length=100)
     consumer = models.ForeignKey(Consumer, null=True)
-
+    # meter = models.ManyToManyField(Meter,
+    #                                blank=True,
+    #                                through=)
+    orum = models.ManyToManyField(Orum,
+                                  through='MeterOrum',
+                                  through_fields=('point', 'orum')
+                                  )
 
     def __str__(self):
         return self.name
@@ -19,10 +25,9 @@ class Point(models.Model):
 
     def value(self):
         period = self.consumer.production_area.power_grid_region.current_period
-
-        if self.orum:
-            return self.orum.value(period)
-
-        if self.meter:
-            return 0
+        self.orum
+        # if self.orum:
+        #     return self.orum.filter()
+        # if self.meter:
+        #     return 0
         return 0

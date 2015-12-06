@@ -98,22 +98,15 @@
       <primary-key name="PRIMARY" columns="session_key"/>
       <index name="django_session_de54fa62" unique="false" columns="expire_date"/>
     </table>
-    <table name="energy_area" schema="" catalog="kalugaenergo" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
-      <column name="res_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <index name="energy_area_1a1cc17b" unique="false" columns="res_id"/>
-    </table>
     <table name="energy_consumer" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="ls" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
       <column name="name" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="production_area_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="area_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <index name="energy_consumer_53dfef5f" unique="false" columns="production_area_id"/>
       <index name="energy_consumer_94757cae" unique="false" columns="type_id"/>
-      <index name="energy_consumer_d266de13" unique="false" columns="area_id"/>
     </table>
     <table name="energy_consumertype" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -125,76 +118,125 @@
       <column name="serial_number" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="energy_meterorum" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="installation_in_period_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="meter_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="orum_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="point_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="removed_in_period_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="energy_meterorum_1ea5c9d9" unique="false" columns="installation_in_period_id"/>
+      <index name="energy_meterorum_ab3f49a6" unique="false" columns="removed_in_period_id"/>
+      <index name="energy_meterorum_e6ba718a" unique="false" columns="orum_id"/>
+      <index name="energy_meterorum_f7a5de1d" unique="false" columns="meter_id"/>
+      <index name="energy_meterorum_ffb10c68" unique="false" columns="point_id"/>
+    </table>
+    <table name="energy_meterpassport" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="old_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="digits" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="decimals" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="accuracy_class" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="check_period" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <column name="replace_period" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="true" jdbcType="5"/>
+      <column name="voltage" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="amperage" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="type_of_energy" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="type_of_meter" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="tariff" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="phase" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="check" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="direct" sqlType="SMALLINT UNSIGNED" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="comment" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="energy_networkorganization" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="energy_orum" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="hours" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="power" sqlType="DECIMAL" precision="14" scale="5" nullable="false" jdbcType="3"/>
-      <column name="ratio" sqlType="DECIMAL" precision="8" scale="6" nullable="false" jdbcType="3"/>
       <column name="type_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="energy_orum_94757cae" unique="false" columns="type_id"/>
     </table>
-    <table name="energy_orumtype" schema="" catalog="kalugaenergo" type="TABLE">
+    <table name="energy_orumcorrection" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
-      <column name="formula" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-    </table>
-    <table name="energy_orumvalue" schema="" catalog="kalugaenergo" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="kwh" sqlType="DECIMAL" precision="17" scale="5" nullable="true" jdbcType="3"/>
-      <column name="date_use" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kwh" sqlType="DECIMAL" precision="17" scale="5" nullable="false" jdbcType="3"/>
       <column name="orum_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="period_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <index name="energy_orumvalue_orum_id_5670af8a14d72e0b_uniq" unique="true" columns="orum_id,period_id"/>
-      <index name="energy_orumvalue_b1efa79f" unique="false" columns="period_id"/>
-      <index name="energy_orumvalue_e6ba718a" unique="false" columns="orum_id"/>
+      <index name="energy_orumcorrection_b1efa79f" unique="false" columns="period_id"/>
+      <index name="energy_orumcorrection_e6ba718a" unique="false" columns="orum_id"/>
+    </table>
+    <table name="energy_orumdateuse" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date_use" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="orum_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="period_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="energy_orumdateuse_orum_id_23b76447f2639273_uniq" unique="true" columns="orum_id,period_id"/>
+      <index name="energy_orumdateuse_b1efa79f" unique="false" columns="period_id"/>
+      <index name="energy_orumdateuse_e6ba718a" unique="false" columns="orum_id"/>
+    </table>
+    <table name="energy_orumsetting" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="power" sqlType="DECIMAL" precision="14" scale="5" nullable="true" jdbcType="3"/>
+      <column name="hours" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ratio" sqlType="DECIMAL" precision="8" scale="6" nullable="true" jdbcType="3"/>
+      <column name="installation_orum_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="orum_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="removed_orum_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="energy_orumsetting_d84f60cf" unique="false" columns="removed_orum_id"/>
+      <index name="energy_orumsetting_de4ff2c1" unique="false" columns="installation_orum_id"/>
+      <index name="energy_orumsetting_e6ba718a" unique="false" columns="orum_id"/>
+    </table>
+    <table name="energy_orumtype" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="formula" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="energy_period" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="date_start" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <column name="faza_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="last_period_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <index name="energy_period_0144db45" unique="false" columns="last_period_id"/>
+      <index name="energy_period_3f1a5bbb" unique="false" columns="last_period_id"/>
     </table>
     <table name="energy_point" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="consumer_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="orum_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="energy_point_1db5a817" unique="false" columns="consumer_id"/>
-      <index name="energy_point_e6ba718a" unique="false" columns="orum_id"/>
-    </table>
-    <table name="energy_point_meter" schema="" catalog="kalugaenergo" type="TABLE">
-      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="point_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="meter_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <primary-key name="PRIMARY" columns="id"/>
-      <index name="point_id" unique="true" columns="point_id,meter_id"/>
-      <index name="energy_point_meter_f7a5de1d" unique="false" columns="meter_id"/>
-      <index name="energy_point_meter_ffb10c68" unique="false" columns="point_id"/>
     </table>
     <table name="energy_powergridregion" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
       <column name="current_period_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="production_department_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <index name="energy_res_336c27d3" unique="false" columns="current_period_id"/>
-      <index name="energy_res_9df5f672" unique="false" columns="production_department_id"/>
+      <index name="energy_powergridregion_336c27d3" unique="false" columns="current_period_id"/>
+      <index name="energy_powergridregion_9df5f672" unique="false" columns="production_department_id"/>
+    </table>
+    <table name="energy_productionarea" schema="" catalog="kalugaenergo" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="power_grid_region_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="energy_productionarea_aa0b65e6" unique="false" columns="power_grid_region_id"/>
     </table>
     <table name="energy_productiondepartment" schema="" catalog="kalugaenergo" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
       <column name="network_organization_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="energy_productiondepartment_9be9c8be" unique="false" columns="network_organization_id"/>
