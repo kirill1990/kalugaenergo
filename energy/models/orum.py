@@ -29,7 +29,7 @@ class Orum(models.Model):
         :return: kwh корректировки
         """
         correction = self.orumcorrection_set.filter(period=period).aggregate(Sum('kwh'))['kwh__sum']
-        return correction if correction else Decimal(0)
+        return Decimal(round(correction, 3)) if correction else Decimal(0)
 
     def get_date_use(self, period):
         """
