@@ -1,9 +1,9 @@
 # coding: utf8
+from django.test import TestCase
+from energy.models import NetworkOrganization
 
 __author__ = 'Demyanov Kirill'
 
-from django.test import TestCase
-from energy.models import NetworkOrganization
 
 class NetworkOrganizationTest(TestCase):
     def test_create_model(self):
