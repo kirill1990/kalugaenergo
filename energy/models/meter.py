@@ -17,7 +17,7 @@ class Meter(models.Model):
                                      blank=True)
 
     passport = models.ForeignKey(MeterPassport)
-    res = models.ForeignKey(PowerGridRegion)
+    power_grid_region = models.ForeignKey(PowerGridRegion)
 
     date_created = models.DateField(u'Дата изготовления',
                                     null=True,
@@ -64,11 +64,13 @@ class Meter(models.Model):
         :return: показание за указанный период
         """
 
-        """ исключаются показания за ранние периоды, чем необходимо """
+        # исключаются показания за ранние периоды, чем необходимо
         m_reading = self.meterreading_set.filter(period__lte=period)
-        """ исключаются события показаний установки и снятия счетчика """
+
+        # исключаются события показаний установки и снятия счетчика
         m_reading = m_reading.exclude(event__in=[1, 2])
-        """ выставление показаний по приоритетным полям (см. таблицу) """
+
+        # выставление показаний по приоритетным полям (см. таблицу)
         m_reading = m_reading.order_by('-period', '-is_true', 'event__priority', '-reading').first()
 
         return m_reading.reading if m_reading else self.meterreading_set.filter(event=1).first().reading
