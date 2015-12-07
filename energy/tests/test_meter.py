@@ -38,36 +38,47 @@ class TestMeter(TestCase):
     def test_get_reading(self):
         """ Проверка получения показаний за выбранный период """
 
-        """ начального показания """
+        # начального показания
         self.assertEqual(self.meter.get_reading_for(self.periods[2]), 100)
-        """ показания за период только с одним показанием """
+
+        # показания за период только с одним показанием
         self.assertEqual(self.meter.get_reading_for(self.periods[9]), 125)
-        """ показания за период с несколькими показаниями """
+
+        # показания за период с несколькими показаниями
         self.assertEqual(self.meter.get_reading_for(self.periods[10]), 135)
-        """ показаний по приоритету """
+
+        # показаний по приоритету
         self.assertEqual(self.meter.get_reading_for(self.periods[3]), 103)
-        """ на жесткий выбор используемого показания """
+
+        # на жесткий выбор используемого показания
         self.assertEqual(self.meter.get_reading_for(self.periods[4]), 113)
-        """ показания в период без данных """
+
+        # показания в период без данных
         self.assertEqual(self.meter.get_reading_for(self.periods[5]), 113)
         self.assertEqual(self.meter.get_reading_for(self.periods[8]), 120)
-        """ показания которое перешло через ноль """
+
+        # показания которое перешло через ноль
         self.assertEqual(self.meter.get_reading_for(self.periods[11]), 44)
 
     def test_get_last_reading(self):
         """ Проверка получения показаний за прошлый период """
 
-        """ начального показания """
+        # начального показания
         self.assertEqual(self.meter.get_last_reading_for(self.periods[3]), 100)
-        """ показания за период только с одним показанием """
+
+        # показания за период только с одним показанием
         self.assertEqual(self.meter.get_last_reading_for(self.periods[10]), 125)
-        """ показания за период с несколькими показаниями """
+
+        # показания за период с несколькими показаниями
         self.assertEqual(self.meter.get_last_reading_for(self.periods[11]), 135)
-        """ показаний по приоритету """
+
+        # показаний по приоритету
         self.assertEqual(self.meter.get_last_reading_for(self.periods[4]), 103)
-        """ жесткий выбор используемого показания """
+
+        # жесткий выбор используемого показания
         self.assertEqual(self.meter.get_last_reading_for(self.periods[5]), 113)
-        """ показания в период без данных """
+
+        # показания в период без данных
         self.assertEqual(self.meter.get_last_reading_for(self.periods[6]), 113)
 
     def test_get_correction_in(self):
