@@ -15,7 +15,7 @@ class Transformer(models.Model):
                               decimal_places=4,
                               max_digits=14,
                               )
-    s = models.PositiveIntegerField(u'Номинальная мощность трансформатора')
+    s = models.PositiveIntegerField(u'Номинальная мощность трансформатора, кВа')
     comment = models.TextField(u'Комментарий', max_length=128, null=True, blank=True)
 
     def __str__(self):
