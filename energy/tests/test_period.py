@@ -9,11 +9,28 @@ class PeriodTest(TestCase):
     fixtures = ['energy_fixtures.json']
 
     def setUp(self):
-        self.periods = {x: Period.objects.get(pk=x) for x in range(1, 11)}
+        self.periods = {x: Period.objects.get(pk=x) for x in range(1, 13)}
 
     def test_count(self):
         """ Наличие периодов в бд """
         self.assertNotEqual(Period.objects.all().count(), 0)
+
+    def test_get_hour(self):
+        """ Проверяем  """
+
+        # Периоды, где 31 дней в месяце
+        for index in [1, 3, 5, 7, 8, 10, 12]:
+            self.assertEqual(self.periods[index].get_hour(), 744)
+
+        # Периоды, где 30 дней в месяце
+        for index in [4, 6, 9, 11]:
+            self.assertEqual(self.periods[index].get_hour(), 720)
+
+        # Февраль с 28 днями
+        self.assertEqual(self.periods[2].get_hour(), 672)
+
+        # Февраль с 29 днями
+        self.assertEqual(Period.objects.get(pk=26).get_hour(), 696)
 
     def test_between_left(self):
         """ Проверяемый период находится левее проверяемой временной линии """

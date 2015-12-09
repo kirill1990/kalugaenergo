@@ -11,7 +11,26 @@ class Period(models.Model):
     last_period = models.ForeignKey('self', blank=True, null=True)
     faza_id = models.IntegerField('ID периодов в фазе', help_text='Шаблон yyyymm(201501)')
 
+    def get_hour(self):
+        """
+        Рассчитывает количество часов в периоде
+        :return: количество часов в периоде
+        """
+        if self.date_start.month in [1, 3, 5, 7, 8, 10, 12]:
+            return 744
+        elif self.date_start.month in [4, 6, 9, 11]:
+            return 720
+        elif self.date_start.month in [2]:
+            return 696 if self.date_start.year % 4 == 0 else 672
+
     def between(self, left, right):
+        """
+        Проверяет нахождения периода внутри временной линии между двумя другими
+        :param left: период до
+        :param right: период после(возможен None)
+        :return: True - период входит в промежуток
+                 False - период не входит в промежуток
+        """
         return True if left.date_start <= self.date_start and \
                        (not right or self.date_start < right.date_start) else False
 
