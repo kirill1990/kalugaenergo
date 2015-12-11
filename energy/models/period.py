@@ -12,10 +12,7 @@ class Period(models.Model):
     faza_id = models.IntegerField('ID периодов в фазе', help_text='Шаблон yyyymm(201501)')
 
     def get_hour(self):
-        """
-        Рассчитывает количество часов в периоде
-        :return: количество часов в периоде
-        """
+        """ Количество часов в периоде """
         if self.date_start.month in [1, 3, 5, 7, 8, 10, 12]:
             return 744
         elif self.date_start.month in [4, 6, 9, 11]:
@@ -23,7 +20,7 @@ class Period(models.Model):
         elif self.date_start.month in [2]:
             return 696 if self.date_start.year % 4 == 0 else 672
 
-    def between(self, left, right):
+    def is_between(self, left, right):
         """
         Проверяет нахождения периода внутри временной линии между двумя другими
         :param left: период до
