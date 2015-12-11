@@ -35,7 +35,7 @@ class OrumSetting(models.Model):
                                      )
 
     def is_working_in(self, period):
-        return period.between(self.installation_orum, self.removed_orum)
+        return period.is_between(self.installation_orum, self.removed_orum)
 
     def __str__(self):
         return u'%s' % self.id
