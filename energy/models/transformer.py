@@ -5,13 +5,13 @@ __author__ = 'Demyanov Kirill'
 
 
 class Transformer(models.Model):
-    old_id = models.PositiveIntegerField(u'Уникальный номер из т2')
+    old_id = models.PositiveIntegerField(u'Уникальный номер из т2', unique=True)
     title = models.CharField(u'Наименование трансформатора', max_length=64)
-    pxx = models.DecimalField(u'Потери холостого хода',
+    pxx = models.DecimalField(u'Потери холостого хода(Pxx)',
                               decimal_places=4,
                               max_digits=14,
                               )
-    pkz = models.DecimalField(u'Потери в обмотках',
+    pkz = models.DecimalField(u'Потери в обмотках(Pкз)',
                               decimal_places=4,
                               max_digits=14,
                               )

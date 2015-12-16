@@ -5,9 +5,9 @@ __author__ = 'Demyanov Kirill'
 
 
 class Wire(models.Model):
-    old_id = models.PositiveIntegerField(u'Уникальный номер из т2')
+    old_id = models.PositiveIntegerField(u'Уникальный номер из т2', unique=True)
     title = models.CharField(u'Наименование провода', max_length=64)
-    ro = models.DecimalField(u'Удельное сопротивление провода',
+    ro = models.DecimalField(u'Удельное сопротивление провода(ro)',
                              decimal_places=4,
                              max_digits=7,
                              )
