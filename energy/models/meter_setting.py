@@ -1,7 +1,7 @@
 # coding: utf8
 from django.db import models
 from meter import Meter
-from transformator import Transformer
+from transformer import Transformer
 from wire import Wire
 from period import Period
 
@@ -24,11 +24,11 @@ class MeterSetting(models.Model):
     }
 
     meter = models.ForeignKey(Meter)
-    work_hours = models.PositiveSmallIntegerField(u'Количество часов работы')
+    work_hours = models.PositiveSmallIntegerField(u'Количество часов работы', null=True, blank=True)
     type_of_energy = models.PositiveSmallIntegerField(u'Вид энергии', choices=type_of_energy_choice)
     direction_energy = models.PositiveSmallIntegerField(u'Направление энергии', choices=direction_energy_choice)
     meter_place = models.PositiveSmallIntegerField(u'Место установки счетчика', choices=meter_place_choice)
-    is_control = models.BooleanField(u'Контрольный счетчик')
+    is_control = models.BooleanField(u'Контрольный счетчик', default=False)
     c_trans = models.DecimalField(u'Коэффициентр трансформации',
                                   decimal_places=4,
                                   max_digits=12,
@@ -43,6 +43,8 @@ class MeterSetting(models.Model):
                                            decimal_places=4,
                                            max_digits=12,
                                            default=1,
+                                           null=True,
+                                           blank=True,
                                            )
     cosfi = models.DecimalField(u'Коэффициентр трансформации',
                                 decimal_places=5,
@@ -68,14 +70,17 @@ class MeterSetting(models.Model):
                                        null=True,
                                        blank=True,
                                        )
-    transformer = models.ForeignKey(Transformer)
-    wire = models.ForeignKey(Wire)
-    installation_meter = models.ForeignKey(Period,
-                                           related_name='installation_meter_set',
-                                           null=True,
-                                           )
-    removed_meter = models.ForeignKey(Period,
-                                      related_name='removed_meter_set',
-                                      null=True,
-                                      blank=True,
-                                      )
+    transformer = models.ForeignKey(Transformer, null=True, blank=True)
+    wire = models.ForeignKey(Wire, null=True, blank=True)
+    installation_meter_setting = models.ForeignKey(Period,
+                                                   related_name='installation_meter_setting_set',
+                                                   null=True,
+                                                   )
+    removed_meter_setting = models.ForeignKey(Period,
+                                              related_name='removed_meter_setting_set',
+                                              null=True,
+                                              blank=True,
+                                              )
+
+    def is_working_in(self, period):
+        return period.is_between(self.installation_meter_setting, self.removed_meter_setting)

@@ -25,7 +25,7 @@ from energy.models.meter_reading_event import MeterReadingEvent
 from energy.models.meter_correction import MeterCorrection
 from energy.models.meter_setting import MeterSetting
 
-from energy.models.transformator import Transformer
+from energy.models.transformer import Transformer
 from energy.models.wire import Wire
 
 __author__ = 'Demyanov Kirill'
