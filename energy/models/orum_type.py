@@ -12,7 +12,7 @@ class OrumType(models.Model):
         (3, 'Расход * Количество дней * Часы'),
     }
 
-    title = models.CharField('Наименование', max_length=30)
+    title = models.CharField('Наименование', max_length=31)
     formula = models.IntegerField('Формула', choices=FORMULA_CHOICE)
 
     def __str__(self):
