@@ -1,5 +1,6 @@
 # coding: utf8
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from orum import Orum
 from period import Period
 
@@ -12,17 +13,20 @@ class OrumSetting(models.Model):
                                 decimal_places=5,
                                 max_digits=14,
                                 null=True,
+                                validators=[MinValueValidator(0.0001), MaxValueValidator(1000000)],
                                 )
     hours = models.PositiveIntegerField(u'Часы использования',
                                         default=1,
                                         null=True,
-                                        blank=True
+                                        blank=True,
+                                        validators=[MinValueValidator(0), MaxValueValidator(1000)],
                                         )
     ratio = models.DecimalField(u'Коэффицент потребления',
                                 decimal_places=6,
                                 max_digits=8,
                                 default=1,
                                 null=True,
+                                validators=[MinValueValidator(0), MaxValueValidator(1000)],
                                 )
     installation_orum = models.ForeignKey(Period,
                                           related_name='installation_orum_set',
@@ -33,9 +37,6 @@ class OrumSetting(models.Model):
                                      null=True,
                                      blank=True,
                                      )
-
-    def is_working_in(self, period):
-        return period.is_between(self.installation_orum, self.removed_orum)
 
     def __str__(self):
         return u'%s' % self.id
