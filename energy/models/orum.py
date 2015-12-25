@@ -1,6 +1,7 @@
 # coding: utf8
 from decimal import Decimal
 from django.db import models
+from django.db.models import Q
 from django.db.models import Sum
 from orum_type import OrumType
 
@@ -18,8 +19,9 @@ class Orum(models.Model):
         :return: setting выбранного периода
                  None - setting не найден
         """
-        settings = [element for element in self.orumsetting_set.all() if element.is_working_in(period)]
-        return settings[0] if settings.__len__() > 0 else None
+        settings = self.orumsetting_set.filter(Q(installation_orum__lte=period, removed_orum__gt=period)
+                                               | Q(installation_orum__lte=period, removed_orum__isnull=True))
+        return settings.first()
 
     def get_correction_in(self, period):
         """
