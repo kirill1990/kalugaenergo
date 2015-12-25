@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Главная{% endblock %} &ndash;&ndash; Калугаэнерго</title>
+
+      {% load staticfiles %}
+    <link href=" {% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <script src=" {% static 'js/jquery-latest.js' %}"></script>
+    <script src=" {% static 'js/bootstrap.min.js' %}"></script>
+  </head>
+  <body>
+
+    <div class="navbar navbar-inverse navbar" role="navigation" css="position:static">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Энергия</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{% url 'energy:consumer_list' %}">Юр. лица</a></li>
+            <li><a href="#contact">Исх. СЗ</a></li>
+            <li><a href="#contact">Вх. письма</a></li>
+            <li><a href="#contact">Исх. письма</a></li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" href="#">Остальные<b class="caret"></b> </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="#about">Жилищная инспекция</a></li>
+                    <li><a href="#about">ВХ Прик и Расп МРСК и МИНИСТ-В</a></li>
+                    <li><a href="#about">ВХ Приказы и Распор КЭ</a></li>
+                    <li><a href="#about">Наши Пр и Р</a></li>
+                    <li><a href="#about">Доки</a></li>
+                </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!-- /.container -->
+    </div>
+
+    <div class="container">
+        {% block content %}
+            Ой, что-то пошло не так...
+        {% endblock %}
+    </div><!-- /.container -->
+
+{#    <div id="footer">#}
+{#      <div class="container">#}
+{#        <p class="text-muted">Place sticky footer content here.</p>#}
+{#      </div>#}
+{#    </div>#}
+{#    <div class="panel-footer">test</div>#}
+  </body>
+</html>

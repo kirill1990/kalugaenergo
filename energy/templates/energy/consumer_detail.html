@@ -1,0 +1,87 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    <p style="text-align: right">Расчетный период: <b>{{ period.title }}</b></p>
+    <ul class="nav nav-tabs">
+        <li><a href="#settings" data-toggle="tab">Общие</a></li>
+        <li class="active"><a href="#meters" data-toggle="tab">Счетчики</a></li>
+        <li><a href="#orums" data-toggle="tab">ОРУМ</a></li>
+        <li><a href="#submeters" data-toggle="tab">Субсчетчики</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade" id="settings">
+            <p>{{ object.ls }}</p>
+            <p>{{ object.name }}</p>
+        </div>
+        <div class="tab-pane fade" id="meters">
+{#            {{ object.production_area.power_grid_region.title }}#}
+{#            {{ object.production_area.power_grid_region.current_period.title }}#}
+{#            {% for point in points %}#}
+{#                {% if point.get_orum.orum %}#}
+{#                    <div>#}
+{#                        {{ point }}: {{ point.get_orum.orum }}: {{ pk }}#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+        </div>
+        <div class="tab-pane fade in active" id="orums">
+            <table class="table text-center table-striped table-hover">
+                <tr>
+                    <th class="text-center">Точка учета</th>
+                    <th class="text-center">Вид времени</th>
+                    <th class="text-center">Мощность</th>
+                    <th class="text-center">Часы</th>
+                    <th class="text-center">Время</th>
+                    <th class="text-center">Коэф.</th>
+                    <th class="text-center">Корректировка</th>
+                    <th class="text-center">Расход</th>
+                </tr>
+                <tbody>
+                    {% for data in points %}
+                        <tr>
+                            <td style="text-align: left">{{ data.point }}</td>
+                            <td>{{ data.orum.type }}</td>
+                            <td>{{ data.setting.power }}</td>
+                            <td>
+                                {% if data.orum.type.formula == 3 %}
+                                    {{ data.setting.hours }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if data.orum.type.formula != 1 %}
+                                    {{ data.date_use }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ data.setting.ratio }}</td>
+                            <td>{{ data.correction }}</td>
+                            <td>{{ data.value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="submeters">
+{#            {{ object.production_area.power_grid_region.title }}#}
+{#            {{ object.production_area.power_grid_region.current_period.title }}#}
+{#            {% for point in points %}#}
+{#                {% if point.get_orum.orum %}#}
+{#                    <div>#}
+{#                        {{ point }}: {{ point.get_orum.orum }}: {{ pk }}#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+        </div>
+    </div>
+
+
+{% endblock %}
