@@ -45,24 +45,34 @@
                     <th class="text-center">Действия</th>
                 </tr>
                 <tbody>
-                    {% for data in points %}
-                        <tr>
-                            <td style="text-align: left"><input type="checkbox">&nbsp;&nbsp;{{ data.point }}</td>
-                            <td>{{ data.orum.type }}</td>
-                            <td>{{ data.setting.power|floatformat:"-3" }}</td>
-                            <td>{{ data.setting.ratio|floatformat:"-3" }}</td>
+                    {% for point in points %}
+                        <tr onload='$.post("{% url 'energy:point_refresh' %}",
+                                                   {
+                                                       csrfmiddlewaretoken: "{{ csrf_token }}",
+                                                       period: "{{ period.pk }}",
+                                                       point: "{{ point.pk }}"
+                                                   }, function(data) {
+                                                        var element="#orum_point_";
+                                                        var pk = {{ point.pk }};
+                                                        $(element+pk).text(data.title);
+                                                   });
+                                '>
+                            <td style="text-align: left"><input type="checkbox">&nbsp;&nbsp;<span id='orum_point_{{ point.pk }}'></span></td>
+                            <td><span id="orum_type_title_{{ point.pk }}"></span></td>
+                            <td>{{ point.setting.power|floatformat:"-3" }}</td>
+                            <td>{{ point.setting.ratio|floatformat:"-3" }}</td>
                             <td>
-                                {% if data.orum.type.formula == 3 %}
-                                  {{ data.setting.hours }}
+                                {% if point.orum.type.formula == 3 %}
+                                  {{ point.setting.hours }}
                                 {% else %}
                                     -
                                 {% endif %}
                             </td>
                             <td>
-                                {% if data.orum.type.formula != 1 %}
+                                {% if point.orum.type.formula != 1 %}
                                     <input name='date_use'
                                            type="text"
-                                           value="{{ data.date_use }}"
+                                           value="{{ point.date_use }}"
                                            class="form-control"
                                            size="5"
                                            style="text-align: center"
@@ -70,12 +80,12 @@
                                                    $.post("{% url 'energy:test' %}",
                                                    {
                                                        csrfmiddlewaretoken: "{{ csrf_token }}",
-                                                       orum: "{{ data.orum.pk }}",
+                                                       orum: "{{ point.orum.pk }}",
                                                        period: "{{ period.pk }}",
                                                        date_use: this.value
                                                    }, function(data) {
-                                                        var element="#orum_value_{{ data.orum.pk }}";
-                                                        $(element).text(data);
+                                                        var element="#orum_value_{{ point.orum.pk }}";
+                                                        $(element).text(data.kwh);
                                                    });
                                                    '
                                             >
@@ -83,11 +93,23 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td>{{ data.correction }}</td>
-                            <td id='orum_value_{{ data.orum.pk }}'>{{ data.value }}</td>
+                            <td>{{ point.correction }}</td>
+                            <td id='orum_value_{{ point.orum.pk }}'>{{ point.value }}</td>
                             <td>
                                 <div class="btn-group">
-                                  <button type="button" class="btn btn-default" title="Обновить"><span class="glyphicon glyphicon-refresh"></span></button>
+                                  <button type="button" class="btn btn-default" title="Обновить" onclick='$.post("{% url 'energy:point_refresh' %}",
+                                                   {
+                                                       csrfmiddlewaretoken: "{{ csrf_token }}",
+                                                       period: "{{ period.pk }}",
+                                                       point: "{{ point.pk }}"
+                                                   }, function(data) {
+                                                        var element="#orum_point_";
+                                                        var element2="#orum_type_title_";
+                                                        var pk = {{ point.pk }};
+                                                        $(element+pk).text(data.title);
+                                                        $(element2+pk).text(data.type_title);
+                                                   });
+                                                   '><span class="glyphicon glyphicon-refresh"></span></button>
                                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                  <span class="caret"></span>
                                  <span class="sr-only">Меню с переключением</span>
