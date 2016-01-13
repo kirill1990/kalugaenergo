@@ -8,7 +8,7 @@ from production_department import ProductionDepartment
 
 
 class PowerGridRegion(models.Model):
-    title = models.CharField('Наименование потребителя', max_length=30)
+    title = models.CharField('Наименование РЭСа', max_length=30)
     current_period = models.ForeignKey(Period)
     production_department = models.ForeignKey(ProductionDepartment, null=True)
 
