@@ -4,12 +4,14 @@ from django.db import models
 from django.db.models import Q
 from django.db.models import Sum
 from orum_type import OrumType
+from point import Point
 
 __author__ = 'Demyanov Kirill'
 
 
 class Orum(models.Model):
     type = models.ForeignKey(OrumType)
+    point = models.ForeignKey(Point)
 
     def get_setting_in(self, period):
         """
