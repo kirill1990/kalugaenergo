@@ -19,8 +19,10 @@ class Orum(models.Model):
         :return: setting выбранного периода
                  None - setting не найден
         """
-        settings = self.orumsetting_set.filter(Q(installation_orum__lte=period, removed_orum__gt=period)
-                                               | Q(installation_orum__lte=period, removed_orum__isnull=True))
+        settings = self.orumsetting_set.filter(
+            Q(installation_orum__lte=period, removed_orum__gt=period)
+            | Q(installation_orum__lte=period, removed_orum__isnull=True)
+        )
         return settings.first()
 
     def get_correction_in(self, period):
