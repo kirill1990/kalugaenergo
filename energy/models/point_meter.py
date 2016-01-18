@@ -18,11 +18,11 @@ class PointMeter(models.Model):
     )
     installation_in_period = models.ForeignKey(
         Period,
-        related_name='installation_in_period_set',
+        related_name='installation_point_meter_set',
     )
     removed_in_period = models.ForeignKey(
         Period,
-        related_name='removed_in_period_set',
+        related_name='removed_point_meter_set',
         null=True,
         blank=True,
     )
