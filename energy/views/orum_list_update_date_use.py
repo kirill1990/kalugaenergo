@@ -6,7 +6,7 @@ from energy.models import OrumDateUse, Orum, Period
 
 __author__ = 'Demyanov Kirill'
 
-class ConsumerOrumUpdateDateUse(View):
+class OrumUpdateDateUse(View):
     def post(self, request, *args, **kwargs):
         data = {'kwh': 0}
         form = OrumDateUseAddForm(request.POST)

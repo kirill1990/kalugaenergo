@@ -6,7 +6,7 @@ from energy.models import Period, Point
 
 __author__ = 'Demyanov Kirill'
 
-class ConsumerOrumRefresh(View):
+class OrumRefresh(View):
     def post(self, request, *args, **kwargs):
         form = PointPKForm(request.POST)
         data = {}
@@ -14,20 +14,19 @@ class ConsumerOrumRefresh(View):
             point = Point.objects.get(pk=request.POST['point'])
             period = Period.objects.get(pk=request.POST['period'])
 
-            meter_orum = point.get_work(period)
-            if meter_orum:
-                orum = meter_orum.orum
+            orum = point.get_work(period)
+            if orum:
                 setting = orum.get_setting_in(period)
                 # time.sleep(5)
                 # data['title'] = point.name
                 data['orum'] = orum.pk
                 data['power'] = '%.3g' % setting.power
                 data['ratio'] = '%.3g' % setting.ratio
-                data['hours'] = setting.hours if orum.type.formula == 3 else '-'
-                data['type_title'] = orum.type.title
-                data['type_formula'] = orum.type.formula
+                data['hours'] = setting.hours if setting.type.formula == 3 else '-'
+                data['type_title'] = setting.type.title
+                data['type_formula'] = setting.type.formula
                 data['correction'] = orum.get_correction_in(period)
-                data['date_use'] = orum.get_date_use(period) if orum.type.formula in (2, 3) else '-'
+                data['date_use'] = orum.get_date_use(period) if setting.type.formula in (2, 3) else '-'
                 data['kwh'] = orum.get_kwh_in(period)
                 data['status'] = 0
             else:

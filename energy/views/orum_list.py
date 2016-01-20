@@ -7,20 +7,20 @@ from energy.models import Consumer
 __author__ = 'Demyanov Kirill'
 
 
-class ConsumerOrumList(DetailView):
+class OrumList(DetailView):
     model = Consumer
-    template_name = 'energy/consumer_orum.html'
+    template_name = 'energy/orum_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ConsumerOrumList, self).get_context_data(**kwargs)
+        context = super(OrumList, self).get_context_data(**kwargs)
 
         context['period'] = self.object.production_area.power_grid_region.current_period
 
         points = self.object.point_set.filter(
-            Q(meterorum__installation_in_period__lte=context['period'],
-              meterorum__removed_in_period__gt=context['period'],)
-            | Q(meterorum__installation_in_period__lte=context['period'],
-                meterorum__removed_in_period__isnull=True)
+            Q(orum__installation_in_period__lte=context['period'],
+              orum__removed_in_period__gt=context['period'],)
+            | Q(orum__installation_in_period__lte=context['period'],
+                orum__removed_in_period__isnull=True)
         )
 
         context['orum_count'] = points.__len__()
