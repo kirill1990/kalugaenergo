@@ -3,15 +3,26 @@ from decimal import Decimal
 from django.db import models
 from django.db.models import Q
 from django.db.models import Sum
-from orum_type import OrumType
 from point import Point
+from period import Period
 
 __author__ = 'Demyanov Kirill'
 
 
 class Orum(models.Model):
-    type = models.ForeignKey(OrumType)
-    point = models.ForeignKey(Point)
+    point = models.ForeignKey(
+        Point
+    )
+    installation_in_period = models.ForeignKey(
+        Period,
+        related_name='installation_in_period_set',
+    )
+    removed_in_period = models.ForeignKey(
+        Period,
+        related_name='removed_in_period_set',
+        null=True,
+        blank=True,
+    )
 
     def get_setting_in(self, period):
         """
@@ -75,15 +86,15 @@ class Orum(models.Model):
         setting = self.get_setting_in(period)
         date_use = self.get_date_use(period)
 
-        if not setting or not date_use and self.type.formula in (2, 3):
+        if not setting or not date_use and setting.type.formula in (2, 3):
             return None
 
         kwh = setting.ratio * setting.power
 
-        if self.type.formula in (2, 3):
+        if setting.type.formula in (2, 3):
             kwh *= date_use
 
-            if self.type.formula == 3:
+            if setting.type.formula == 3:
                 kwh *= setting.hours
 
         correction = self.get_correction_in(period)
@@ -91,7 +102,7 @@ class Orum(models.Model):
         return round(Decimal(kwh) + correction, 3)
 
     def __str__(self):
-        return u'%s: %i' % (self.type.title, self.pk)
+        return u'%s: %i' % (self.point, self.pk)
 
     def __unicode__(self):
         return u"%s" % self.__str__()
