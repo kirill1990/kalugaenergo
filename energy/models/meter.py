@@ -1,49 +1,55 @@
 # coding: utf8
 import math
 from django.db import models
-from django.db.models import Sum, Max, Min
+from django.db.models import Sum
 from decimal import Decimal
 from meter_passport import MeterPassport
 from power_grid_region import PowerGridRegion
-from period import Period
+# from period import Period
 # from meter_reading import MeterReading
 
 __author__ = 'Demyanov Kirill'
 
 
 class Meter(models.Model):
-    serial_number = models.CharField(u'Номер счетчика',
-                                     max_length=32,
-                                     null=True,
-                                     blank=True,
-                                     )
-
-    passport = models.ForeignKey(MeterPassport)
-    power_grid_region = models.ForeignKey(PowerGridRegion)
-
-    date_created = models.DateField(u'Дата изготовления',
-                                    null=True,
-                                    blank=True,
-                                    )
-    date_checked = models.DateField(u'Дата проверки',
-                                    null=True,
-                                    blank=True,
-                                    )
-
-    last_date_instrumental = models.DateField(u'Дата последней инструментальной проверки',
-                                              null=True,
-                                              blank=True
-                                              )
-    next_date_instrumental = models.DateField(u'Дата следующей инструментальной проверки',
-                                              null=True,
-                                              blank=True,
-                                              )
-
-    comment = models.TextField(u'Комментарий',
-                               max_length=128,
-                               null=True,
-                               blank=True,
-                               )
+    serial_number = models.CharField(
+        u'Номер счетчика',
+        max_length=32,
+        null=True,
+        blank=True,
+    )
+    passport = models.ForeignKey(
+        MeterPassport
+    )
+    power_grid_region = models.ForeignKey(
+        PowerGridRegion
+    )
+    date_created = models.DateField(
+        u'Дата изготовления',
+        null=True,
+        blank=True,
+    )
+    date_checked = models.DateField(
+        u'Дата проверки',
+        null=True,
+        blank=True,
+    )
+    last_date_instrumental = models.DateField(
+        u'Дата последней инструментальной проверки',
+        null=True,
+        blank=True
+    )
+    next_date_instrumental = models.DateField(
+        u'Дата следующей инструментальной проверки',
+        null=True,
+        blank=True,
+    )
+    comment = models.TextField(
+        u'Комментарий',
+        max_length=128,
+        null=True,
+        blank=True,
+    )
 
     def test(self):
         pass
@@ -88,13 +94,13 @@ class Meter(models.Model):
         """ Сумма корректировки kwh за указанный период"""
 
         correction = self.metercorrection_set.filter(period=period).aggregate(Sum('kwh'))['kwh__sum']
-        return round(correction, 3) if correction else Decimal(0)
+        return Decimal(round(correction, 3)) if correction else Decimal(0)
 
     def kwh_consumption(self, period):
         """ kwh с учетом коэффициентов потребления и потерь за период по счетчику """
 
         setting = self.setting_in(period)
-        return round(self.kwh_meter(period) * setting.c_loss * setting.c_trans, 3)
+        return Decimal(round(self.kwh_meter(period) * setting.c_loss * setting.c_trans, 3))
 
     def kwh_meter(self, period):
         """ kwh за период по счетчику """
@@ -105,7 +111,7 @@ class Meter(models.Model):
         # переход через ноль счетчика
         correct = 10**self.passport.digits if current_reading < last_reading else 0
 
-        return current_reading - last_reading + correct
+        return Decimal(current_reading - last_reading + correct)
 
     def kwh(self, period):
         """ kwh - полное потребление за период с учетом коэффицинтов и всех потерь """
@@ -113,7 +119,7 @@ class Meter(models.Model):
         setting = self.setting_in(period)
 
         if setting:
-            consumption = self.kwh_meter(period) * setting.c_loss * setting.c_trans
+            consumption = self.kwh_consumption(period)
             correction = self.correction_in(period)
 
             wire_loss = self.loss_in_wire(setting=setting, period=period)
@@ -122,7 +128,7 @@ class Meter(models.Model):
             result = consumption + correction + wire_loss + transformer_loss
         else:
             return 0
-        return result
+        return Decimal(result)
 
     def setting_in(self, period):
         """ Параметры установки счетчика за указанный период """
@@ -168,7 +174,7 @@ class Meter(models.Model):
             w_txx = pxx * hours
 
             # потери электроэнергии в рабочем трансформаторе
-            w_t = Decimal(consumption**2) * Decimal(pkz) / (Decimal(work_h) * Decimal(s**2) * Decimal(cosfi**2))
+            w_t = consumption**2 * pkz / (Decimal(work_h) * s**2 * cosfi**2)
 
             return round((w_txx + w_t) * setting.transformer_loss, 3)
         return 0
@@ -202,8 +208,8 @@ class Meter(models.Model):
 
             consumption = self.kwh_consumption(period)
 
-            return round(Decimal(consumption**2) * Decimal(ro) * Decimal(length) \
-                   / (Decimal(1000) * Decimal(hours) * (Decimal(voltage) * Decimal(cosfi))**2), 3)
+            result = consumption**2 * ro * length / (1000 * hours * (voltage * cosfi)**2)
+            return Decimal(round(result, 3))
         return 0
 
     @staticmethod
@@ -214,8 +220,8 @@ class Meter(models.Model):
         if setting.cosfi:
             cosfi = setting.cosfi
         elif setting.tangfi:
-            cosfi = 1 / math.sqrt(1 + setting.tangfi ** 2)
-        return round(cosfi, 9)
+            cosfi = 1 / math.sqrt(1 + setting.tangfi**2)
+        return Decimal(round(cosfi, 9))
 
     def __str__(self):
         return '%s/%s' % (self.serial_number, self.passport.title)

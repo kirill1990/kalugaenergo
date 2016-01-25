@@ -5,8 +5,14 @@ __author__ = 'Demyanov Kirill'
 
 
 class MeterReadingEvent(models.Model):
-    title = models.CharField(u'Наименование', max_length=32)
-    priority = models.PositiveSmallIntegerField(u'Приоритет показаний', unique=True)
+    title = models.CharField(
+        u'Наименование',
+        max_length=32,
+    )
+    priority = models.PositiveSmallIntegerField(
+        u'Приоритет показаний',
+        unique=True,
+    )
 
     def __str__(self):
         return u'%s' % self.title

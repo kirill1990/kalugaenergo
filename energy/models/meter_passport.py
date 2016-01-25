@@ -38,31 +38,88 @@ class MeterPassport(models.Model):
         (1, 'Многотарифный(Зональный)'),
     }
 
-    title = models.CharField(u'Наименование счетчика', max_length=64)
-    old_id = models.PositiveIntegerField(u'Старый id', null=True, db_index=True)
+    title = models.CharField(
+        u'Наименование счетчика',
+        max_length=64,
+    )
+    old_id = models.PositiveIntegerField(
+        u'Старый id',
+        null=True,
+        db_index=True,
+    )
 
-    check = models.BooleanField(u'Проверенный')
-    active = models.BooleanField(u'Активный', default=True)
+    check = models.BooleanField(
+        u'Проверенный',
+    )
+    active = models.BooleanField(
+        u'Активный',
+        default=True,
+    )
 
-    digits = models.PositiveSmallIntegerField(u'Целая часть')
-    decimals = models.PositiveSmallIntegerField(u'Дробная часть')
+    digits = models.PositiveSmallIntegerField(
+        u'Целая часть',
+    )
+    decimals = models.PositiveSmallIntegerField(
+        u'Дробная часть',
+    )
 
-    accuracy_class = models.PositiveSmallIntegerField(u'Класс точности', choices=accuracy_class_choice)
+    accuracy_class = models.PositiveSmallIntegerField(
+        u'Класс точности',
+        choices=accuracy_class_choice,
+    )
 
-    check_period = models.PositiveSmallIntegerField(u'Период проверки', null=True, blank=True)
-    replace_period = models.PositiveSmallIntegerField(u'Период замены', null=True, blank=True)
+    check_period = models.PositiveSmallIntegerField(
+        u'Период проверки',
+        null=True,
+        blank=True,
+    )
+    replace_period = models.PositiveSmallIntegerField(
+        u'Период замены',
+        null=True,
+        blank=True,
+    )
 
-    voltage = models.CharField(u'Напряжение', max_length=64, null=True, blank=True)
-    amperage = models.CharField(u'Ток', max_length=64, null=True, blank=True)
+    voltage = models.CharField(
+        u'Напряжение',
+        max_length=64,
+        null=True,
+        blank=True,
+    )
+    amperage = models.CharField(
+        u'Ток',
+        max_length=64,
+        null=True,
+        blank=True,
+    )
 
-    type_of_energy = models.PositiveSmallIntegerField(u'Вид энергии', choices=type_of_energy_choice)
-    type_of_meter = models.PositiveSmallIntegerField(u'Тип счетчика', choices=type_of_meter_choice)
+    type_of_energy = models.PositiveSmallIntegerField(
+        u'Вид энергии',
+        choices=type_of_energy_choice,
+    )
+    type_of_meter = models.PositiveSmallIntegerField(
+        u'Тип счетчика',
+        choices=type_of_meter_choice,
+    )
 
-    tariff = models.PositiveSmallIntegerField(u'Тарифность', choices=tariff_choice)
-    phase = models.PositiveSmallIntegerField(u'Фаза', choices=phase_choice)
-    direct = models.PositiveSmallIntegerField(u'Направление', choices=direct_choice)
+    tariff = models.PositiveSmallIntegerField(
+        u'Тарифность',
+        choices=tariff_choice,
+    )
+    phase = models.PositiveSmallIntegerField(
+        u'Фаза',
+        choices=phase_choice,
+    )
+    direct = models.PositiveSmallIntegerField(
+        u'Направление',
+        choices=direct_choice,
+    )
 
-    comment = models.TextField(u'Комментарий', max_length=182, null=True, blank=True)
+    comment = models.TextField(
+        u'Комментарий',
+        max_length=182,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.title

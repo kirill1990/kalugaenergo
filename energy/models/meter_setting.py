@@ -31,23 +31,23 @@ class MeterSetting(models.Model):
     work_hours = models.PositiveSmallIntegerField(
         u'Количество часов работы',
         null=True,
-        blank=True
+        blank=True,
     )
     type_of_energy = models.PositiveSmallIntegerField(
         u'Вид энергии',
-        choices=type_of_energy_choice
+        choices=type_of_energy_choice,
     )
     direction_energy = models.PositiveSmallIntegerField(
         u'Направление энергии',
-        choices=direction_energy_choice
+        choices=direction_energy_choice,
     )
     meter_place = models.PositiveSmallIntegerField(
         u'Место установки счетчика',
-        choices=meter_place_choice
+        choices=meter_place_choice,
     )
     is_control = models.BooleanField(
         u'Контрольный счетчик',
-        default=False
+        default=False,
     )
     c_trans = models.DecimalField(
         u'Коэффициентр трансформации',
@@ -102,11 +102,12 @@ class MeterSetting(models.Model):
     transformer = models.ForeignKey(
         Transformer,
         null=True,
-        blank=True)
+        blank=True,
+    )
     wire = models.ForeignKey(
         Wire,
         null=True,
-        blank=True
+        blank=True,
     )
     installation_meter_setting = models.ForeignKey(
         Period,
