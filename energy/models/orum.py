@@ -1,4 +1,5 @@
 # coding: utf8
+from django.core.urlresolvers import reverse
 from decimal import Decimal
 from django.db import models
 from django.db.models import Q
@@ -33,8 +34,11 @@ class Orum(models.Model):
                  None - setting не найден
         """
         settings = self.orumsetting_set.filter(
-            Q(installation_orum__lte=period, removed_orum__gt=period)
-            | Q(installation_orum__lte=period, removed_orum__isnull=True)
+            Q(installation_orum__lte=period)
+            & (
+                Q(removed_orum__gt=period)
+                | Q(removed_orum__isnull=True)
+            )
         )
         return settings.first()
 
