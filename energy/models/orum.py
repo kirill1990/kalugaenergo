@@ -90,15 +90,15 @@ class Orum(models.Model):
         setting = self.get_setting_in(period)
         date_use = self.get_date_use(period)
 
-        if not setting or not date_use and setting.type_formula in (2, 3):
+        if not setting or not date_use and setting.type.formula in (2, 3):
             return None
 
         kwh = setting.ratio * setting.power
 
-        if setting.type_formula in (2, 3):
+        if setting.type.formula in (2, 3):
             kwh *= date_use
 
-            if setting.type_formula == 3:
+            if setting.type.formula == 3:
                 kwh *= setting.hours
 
         correction = self.get_correction_in(period)
