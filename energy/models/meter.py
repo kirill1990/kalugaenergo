@@ -19,10 +19,10 @@ class Meter(models.Model):
         blank=True,
     )
     passport = models.ForeignKey(
-        MeterPassport
+        MeterPassport,
     )
     power_grid_region = models.ForeignKey(
-        PowerGridRegion
+        PowerGridRegion,
     )
     date_created = models.DateField(
         u'Дата изготовления',
@@ -55,7 +55,7 @@ class Meter(models.Model):
         pass
         # period = Period.objects.get(pk=5)
 
-    def reading_for(self, period):
+    def reading(self, period, status):
         """
         Показание на указанный период
 
@@ -72,10 +72,16 @@ class Meter(models.Model):
         3      * 0       *    5      *  125
         2      * 0       *    1      *  100
         В данном случ. выбирается число 133
+
+        * is_true - Принимать показание
         """
 
-        # исключаются показания за ранние периоды, чем необходимо
-        m_reading = self.meterreading_set.filter(period__lte=period)
+        if status:
+            # исключаются показания за ранние периоды, чем необходимо
+            m_reading = self.meterreading_set.filter(period__lte=period)
+        else:
+            # показание за ранние периоды, чем необходимо
+            m_reading = self.meterreading_set.filter(period=period)
 
         # исключаются события показаний установки и снятия счетчика
         m_reading = m_reading.exclude(event__in=[1, 2])
@@ -83,7 +89,18 @@ class Meter(models.Model):
         # выставление показаний по приоритетным полям (см. таблицу)
         m_reading = m_reading.order_by('-period', '-is_true', 'event__priority', '-reading').first()
 
-        return m_reading.reading if m_reading else self.meterreading_set.filter(event=1).first().reading
+        if m_reading:
+            return m_reading.reading
+        else:
+            return self.meterreading_set.filter(event=1).first().reading if status else None
+
+    def reading_in(self, period):
+        """ Показание в указанный период """
+        return self.reading(period=period, status=False)
+
+    def reading_for(self, period):
+        """ Показание на указанный период """
+        return self.reading(period=period, status=True)
 
     def last_reading_for(self, period):
         """ Показание за прошлый период, от указанного периода """
@@ -224,7 +241,7 @@ class Meter(models.Model):
         return Decimal(round(cosfi, 9))
 
     def __str__(self):
-        return '%s/%s' % (self.serial_number, self.passport.title)
+        return '%s / %s' % (self.serial_number, self.passport.title)
 
     def __unicode__(self):
         return u"%s" % self.__str__()
