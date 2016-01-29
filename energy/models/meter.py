@@ -1,7 +1,7 @@
 # coding: utf8
 import math
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from decimal import Decimal
 from meter_passport import MeterPassport
 from power_grid_region import PowerGridRegion
@@ -150,8 +150,14 @@ class Meter(models.Model):
     def setting_in(self, period):
         """ Параметры установки счетчика за указанный период """
 
-        settings = [element for element in self.metersetting_set.all() if element.is_working_in(period)]
-        return settings[0] if settings.__len__() > 0 else None
+        settings = self.metersetting_set.filter(
+            Q(installation_meter_setting__lte=period)
+            & (
+                Q(removed_meter_setting__gt=period)
+                | Q(removed_meter_setting__isnull=True)
+            )
+        )
+        return settings.first()
 
     def loss_in_transformer_period(self, period):
         setting = self.setting_in(period)
