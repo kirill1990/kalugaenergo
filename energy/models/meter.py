@@ -12,6 +12,11 @@ __author__ = 'Demyanov Kirill'
 
 
 class Meter(models.Model):
+
+    class Meta:
+        verbose_name = u'Счетчик'
+        verbose_name_plural = u'Счетчики'
+
     serial_number = models.CharField(
         u'Номер счетчика',
         max_length=32,
