@@ -1,13 +1,26 @@
 # coding: utf8
 from django.core.urlresolvers import reverse
 from django.db import models
-from consumer_type import ConsumerType
 from production_area import ProductionArea
 
 __author__ = 'Demyanov Kirill'
 
 
 class Consumer(models.Model):
+    TYPE_CHOICE = {
+        (0, 'Юридическое лицо'),
+        (1, 'Бытовой потребитель'),
+    }
+    type = models.IntegerField(
+        verbose_name=u'Тип потербителя',
+        choices=TYPE_CHOICE,
+        null=False,
+    )
+    production_area = models.ForeignKey(
+        ProductionArea,
+        verbose_name=u'Производственный участок',
+        null=True,
+    )
     old_id = models.PositiveIntegerField(
         u'Уникальный номер из т2',
         unique=True,
@@ -20,7 +33,7 @@ class Consumer(models.Model):
     )
     name = models.CharField(
         u'Наименование потребителя',
-        max_length=150,
+        max_length=160,
     )
     inn = models.CharField(
         u'ИНН',
@@ -31,15 +44,6 @@ class Consumer(models.Model):
         u'КПП',
         max_length=20,
         blank=True,
-    )
-    type = models.ForeignKey(
-        ConsumerType,
-        verbose_name=u'Тип потербителя',
-    )
-    production_area = models.ForeignKey(
-        ProductionArea,
-        verbose_name=u'Производственный участок',
-        null=True,
     )
 
     def __str__(self):
@@ -56,4 +60,4 @@ class Consumer(models.Model):
         return self.production_area.power_grid_region.current_period
 
     def get_absolute_url(self):
-        return reverse('energy:consumer_detail', kwargs={'pk': self.id})
+        return reverse('energy:consumer', kwargs={'pk': self.id})
