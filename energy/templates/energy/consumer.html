@@ -1,0 +1,30 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    {% include 'energy/consumer_include_tabs.html' with consumer=consumer.pk detail=1 %}
+    {% include 'energy/include_current_period.html' with title=period.title %}
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form action="" method="post" class="form-horizontal" role="form">
+                    <legend>Добавить потребителя</legend>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% include 'energy/form_consumer.html' with field=field %}
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <input type="submit" value="Добавить" class="btn btn-default" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
