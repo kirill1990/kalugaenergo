@@ -2,12 +2,13 @@ from django.contrib import admin
 
 # Register your models here.
 from energy.models import Consumer, \
-    ConsumerType, Meter, \
+    Meter, \
     OrumType, Orum, OrumDateUse, Period, \
     ProductionArea, PowerGridRegion, Point, \
-    NetworkOrganization, ProductionDepartment, MeterOrum, \
+    NetworkOrganization, ProductionDepartment, PointMeter, \
     OrumSetting, OrumCorrection, MeterPassport, \
-    MeterReading, MeterCorrection, MeterReadingEvent
+    MeterReading, MeterCorrection, MeterReadingEvent, \
+    Transformer, Wire
 
 class ChoiceOrumValue(admin.StackedInline):
     model = OrumDateUse
@@ -26,29 +27,43 @@ class OrumAdmin(admin.ModelAdmin):
     # list_display = ['__str__', 'value']
 
 class PointAdmin(admin.ModelAdmin):
-    list_display = ['name', 'value']
+    list_display = ['title', 'value']
+    search_fields = ['number_in_t2']
+
+class PowerGridRegionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'current_period']
+
+
+class ChoicePoint(admin.StackedInline):
+    model = Point
+    extra = 0
+
+class ConsumerAdmin(admin.ModelAdmin):
+    inlines = [ChoicePoint]
 
 class MeterPassportAdmin(admin.ModelAdmin):
-    list_filter = ('active', 'check')
+    list_filter = ('check', 'active')
+    search_fields = ['title', 'pk']
 
 class MeterReadingEventAdmin(admin.ModelAdmin):
     list_display = ['title', 'priority']
 
 admin.site.register(Orum, OrumAdmin)
 
-admin.site.register(Consumer)
-admin.site.register(ConsumerType)
+admin.site.register(Consumer, ConsumerAdmin)
+admin.site.register(Transformer)
+admin.site.register(Wire)
 # admin.site.register(Orum)
 admin.site.register(OrumType)
 # admin.site.register(OrumDateUse)
 admin.site.register(Meter)
 admin.site.register(Period)
 admin.site.register(ProductionArea)
-admin.site.register(PowerGridRegion)
+admin.site.register(PowerGridRegion, PowerGridRegionAdmin)
 admin.site.register(Point, PointAdmin)
 admin.site.register(NetworkOrganization)
 admin.site.register(ProductionDepartment)
-admin.site.register(MeterOrum)
+admin.site.register(PointMeter)
 admin.site.register(MeterPassport, MeterPassportAdmin)
 admin.site.register(MeterReading)
 admin.site.register(MeterReadingEvent, MeterReadingEventAdmin)

@@ -18,7 +18,12 @@ class OrumSettingForm(forms.Form):
         max_value=1000,
         decimal_places=3,
         max_digits=14,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '511.001',
+            }
+        ),
     )
     ratio = forms.DecimalField(
         label=u'Коэффициент',
@@ -26,12 +31,21 @@ class OrumSettingForm(forms.Form):
         max_value=100,
         decimal_places=3,
         max_digits=5,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '1.001',
+            }
+        ),
     )
     hours = forms.IntegerField(
         label=u'Часы',
         min_value=1,
         max_value=1000,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        # required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': '24',
+            }
+        ),
     )

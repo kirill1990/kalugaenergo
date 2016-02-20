@@ -1,6 +1,8 @@
 # coding: utf8
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from energy.models.orum import Orum
 from energy.models.orum_type import OrumType
 from energy.models.period import Period
@@ -50,10 +52,10 @@ class OrumSetting(models.Model):
     )
 
     def get_ratio(self):
-        return u'%.3g' % self.ratio
+        return u'%.3f' % self.ratio
 
     def get_power(self):
-        return u'%.3g' % self.power
+        return u'%.3f' % self.power
 
     def __str__(self):
         return u'%s' % self.id

@@ -11,8 +11,8 @@ class ConsumerCreate(CreateView):
     form_class = ConsumerForm
     # success_url = 'energy/'
 
-    def get_success_url(self):
-        return reverse('energy:consumer_list')
+    # def get_success_url(self):
+    #     return reverse('energy:consumer')
 
     def form_valid(self, form):
         # Мы используем ModelForm, а его метод save() возвращает инстанс
@@ -30,4 +30,4 @@ class ConsumerCreate(CreateView):
 
         # Consumer.objects.create(**form.cleaned_data)
 
-        return redirect(self.get_success_url())
+        return redirect(reverse('energy:consumer', kwargs={'pk': instance.pk}))

@@ -1,0 +1,40 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    Добавление ОРУМа
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" class="form-horizontal" role="form">
+        {% csrf_token %}
+
+
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <legend>Создание точки учета</legend>
+                {% for field in form_point %}
+                    <div class="form-group has-feedback" id="id_setting-{{ field.id_for_label }}">
+                        <label class="col-lg-4 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="col-lg-8 {% if field.errors %}has-error{% endif %}">
+                            {{ field }}
+                            {% for error in field.errors %}
+                                <div class="help-block">
+                                {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{#        <div class="panel panel-default">#}
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <legend>Создание орума</legend>
+                {% include 'energy/form_orum_setting.html' with form=form_setting %}
+            </div>
+        </div>
+        <a class="btn btn-default col-xs-1" href="{% url 'energy:consumer_orum_list' consumer.pk %}">Отмена</a>
+        <input type="submit" value="Добавить" class="btn btn-default col-xs-1" />
+    </form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% csrf_token %}
+<script>
+    var orum = "#{{ form.orum_type.id_for_label }}"
+    var hours = {% if form.hours.value %}{{ form.hours.value }}{% else %}1{% endif %};
+    var hours_span = "#id_setting-{{ form.hours.id_for_label }}";
+    var hours_field = "#{{ form.hours.id_for_label }}";
+    $(document).ready(function(){hours_toggle();$(orum).change(function(){hours_toggle()});});
+    {# TODO: подставить проверку на формулу 1 #}
+    function hours_toggle(){
+        if($(orum).val()==1
+                || $(orum).val()==2
+                || $(orum).val()==7
+                || $(orum).val()==8){
+            $(hours_span).hide();
+            hours = $(hours_field).val();
+            $(hours_field).val(1);
+        }else{
+            $(hours_field).val(hours)
+            $(hours_span).show();
+        }
+    }
+</script>
+{% for field in form %}
+    <div class="form-group has-feedback" id="id_setting-{{ field.id_for_label }}">
+        <label class="col-lg-4 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="col-lg-8 {% if field.errors %}has-error{% endif %}">
+            {{ field }}
+            {% for error in field.errors %}
+                <div class="help-block">
+                {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

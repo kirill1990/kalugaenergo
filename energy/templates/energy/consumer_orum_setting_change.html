@@ -1,0 +1,55 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    Изменение настроек орума
+{% endblock %}
+
+{% block content %}
+    {% include 'energy/include_current_period.html' with title=period.title %}
+    <div class="row">
+    {% if form %}
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form action="" method="post" class="form-horizontal" role="form">
+                    <legend>Параметры ОРУМ</legend>
+                    {% include 'energy/form_orum_setting.html' with form_setting=form %}
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <input type="submit" value="Изменить" class="btn btn-default" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p>Настроек орума в данном периоде нет</p>
+    {% endif %}
+    </div>
+    <div class="row">
+    <p>История настроек орума:</p>
+    <table class="table text-center table-striped table-hover">
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">Тип</th>
+            <th class="text-center">Мощность</th>
+            <th class="text-center">Часы</th>
+            <th class="text-center">Коэф</th>
+            <th class="text-center">Установлен</th>
+            <th class="text-center">Снят</th>
+        </tr>
+        <tbody>
+            {% for setting in settings %}
+                <tr>
+                    <td>{{ forloop.revcounter }}</td>
+                    <td>{{ setting.type }}</td>
+                    <td>{{ setting.power }}</td>
+                    <td>{% if setting.type.formula == 3 %}{{ setting.hours }}{% else %}-{% endif %}</td>
+                    <td>{{ setting.ratio }}</td>
+                    <td>{{ setting.installation_orum }}</td>
+                    <td>{{ setting.removed_orum|default_if_none:"-" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

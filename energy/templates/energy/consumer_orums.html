@@ -1,0 +1,144 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    {% include 'energy/consumer_include_tabs.html' with consumer=consumer.pk orum=1%}
+    {% include 'energy/include_current_period.html' with title=period.title %}
+    <script>
+        var period = '{{ period.pk }}';
+        var csrf_token = '{{ csrf_token }}';
+        var points = {};
+
+        function get_point(point, period){
+            $.post("{% url 'energy:orum_refresh' %}",{
+                        csrfmiddlewaretoken: csrf_token,
+                        period: period,
+                        point: point
+                    }, function(data) {
+                        var element = "#point_" + point;
+                        if(data.status == 0){
+                            points[point] = data.orum;
+                            $(element).find("#orum_type").text(data.type_title);
+                            $(element).find("#orum_power").text(data.power);
+                            $(element).find("#orum_ratio").text(data.ratio);
+                            $(element).find("#orum_hours").text(data.hours);
+                            $(element).find("#orum_correction").text(data.correction);
+                            $(element).find("#orum_kwh").text(data.kwh);
+                            if(data.date_use=='-'){
+                                $(element).find("#orum_date_use").text(data.date_use)
+                            }else{
+                                $(element).find("#orum_date_use_value").val(data.date_use);
+                            }
+                        }else{
+                            $(element).remove()
+                        }
+                    }
+            );
+        }
+
+        function send_date_use(point, date_use){
+            $.post("{% url 'energy:orum_update_date_use' %}",
+                    {
+                        csrfmiddlewaretoken: csrf_token,
+                        orum: points[point],
+                        period: period,
+                        date_use: date_use
+                    }, function(data) {
+                        $("#point_" + point).find("#orum_kwh").text(data.kwh);
+                    });
+        }
+
+        function redirect_to_setting(point){
+            window.location.href = '/energy/orum/'+points[point]+'/setting'
+        }
+
+        function checkbox_click(point){
+            var row_color = (point.checked)?"#FFF5B2":"#FFFFFF"
+            $(point).parent().parent().css({"background-color": row_color});
+        }
+    </script>
+    <style>
+        th{
+            text-align: center;
+        }
+    </style>
+
+    <form>
+        <span style="color: #8c8c8c">Действие:&nbsp;&nbsp;</span>
+        <span>
+            <select>
+                <option>----</option>
+                <option>Добавить Орум</option>
+            </select>
+        </span>
+        <button class="btn btn-default btn-xs">Выполнить</button>
+        <span class="text-muted"> Всего объектов: {{ points.paginator.count }} </span>
+    </form>
+
+{#        <a href="{% url 'energy:orum_add' object.pk %}">Добавить Орум</a>#}
+
+    <table class="table text-center  table-hover" style="margin-top: 7px">
+        <thead>
+            <tr>
+                <th></th>
+                <th>№</th>
+                <th>Точка учета</th>
+                <th>Время</th>
+                <th>Корректировка</th>
+                <th>Расход</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for point in points %}
+                <script>
+                    $(document).ready(function(){get_point({{ point.pk }}, period);});
+                </script>
+                <tr id="point_{{ point.pk }}" style="vertical-align: middle">
+                    <td style="vertical-align: middle"><input type="checkbox" onchange="checkbox_click(this)"></td>
+                    <td style="vertical-align: middle">{{ points.start_index|add:forloop.counter0 }}</td>
+                    <td style="text-align: left;vertical-align: middle;">
+                        <span id='orum_point_title'>{{ point }}</span>
+                    </td>
+                    <td id="orum_date_use" style="vertical-align: middle">
+                        <input type="text" id="orum_date_use_value" class="form-control input-sm" size="3" style="text-align: center"
+                                                  onchange='send_date_use({{ point.pk }}, this.value)'>
+                    </td>
+                    <td id="orum_correction" style="vertical-align: middle"></td>
+                    <td id="orum_kwh" style="vertical-align: middle"></td>
+                    <td style="vertical-align: middle">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-sm" title="Обновить" onclick='get_point({{ point.pk }}, period);'><span class="glyphicon glyphicon-refresh"></span></button>
+                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Меню с переключением</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Добавить корректировку</a></li>
+                                <li><a href="#" onclick="redirect_to_setting({{ point.pk }})">Изменить параметры</a></li>
+{#                                    <li><a href="#">Другое действие</a></li>#}
+{#                                    <li><a href="#">Что-то иное</a></li>#}
+{#                                    <li class="divider"></li>#}
+{#                                    <li><a href="#">Отдельная ссылка</a></li>#}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if points.paginator.num_pages > 1 %}
+        <ul class="pagination pagination-sm">
+            {% for page in points.paginator.page_range %}
+                <li {% if page == points.number %}class="active"{% endif %}>
+                    <a href="?page={{ page }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
+{% endblock %}

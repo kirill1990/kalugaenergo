@@ -7,10 +7,9 @@ from energy.models.production_area import ProductionArea
 from energy.models.period import Period
 
 from energy.models.consumer import Consumer
-from energy.models.consumer_type import ConsumerType
 
 from energy.models.point import Point
-from energy.models.point_meter_orum import MeterOrum
+from energy.models.point_meter import PointMeter
 
 from energy.models.orum import Orum
 from energy.models.orum_type import OrumType

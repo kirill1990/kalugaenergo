@@ -5,24 +5,22 @@
 {% endblock %}
 
 {% block content %}
-
-    <p class="lead">Добавить потребителя</p>
-
-    <form action="" method="post" class="form-horizontal" role="form">
-        {% csrf_token %}
-
-        {% for field in form %}
-            {% if field.errors %}
-                <div class="form-group has-error has-feedback">
-            {% else %}
-                <div class="form-group has-feedback">
-            {% endif %}
-                <label class="col-xs-2 control-label">{{ field.label }}</label>
-                <div class="col-xs-10">{{ field }}</div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="well bs-component">
+                <form action="" method="post" class="form-horizontal" role="form">
+                    <legend>Добавить потребителя</legend>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        {% include 'energy/form_consumer.html' with field=field %}
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-lg-8 col-lg-offset-4">
+                            <input type="submit" value="Добавить" class="btn btn-default" />
+                        </div>
+                    </div>
+                </form>
             </div>
-        {% endfor %}
-
-        <input type="submit" value="Добавить" class="btn btn-default col-xs-1 col-xs-offset-11" />
-    </form>
-
+        </div>
+    </div>
 {% endblock %}

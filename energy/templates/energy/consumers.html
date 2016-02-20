@@ -1,0 +1,73 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    Юридические потребители
+{% endblock %}
+
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="#">Энергия</a></li>
+{#        <li><a href="{% url 'energy:consumer' %}">Library</a></li>#}
+        <li class="active">Юридические потребители</li>
+    </ul>
+    <script type= "text/javascript">
+        function searchClick()
+        {
+            var url = document.getElementById('textSearch');
+            var search = '';
+            if (url.value){
+                search = '?search=' + url.value;
+            }
+            document.location.search = search;
+        }
+    </script>
+    <div class="col-lg-12">
+        <div class="row col-lg-6" style="margin: 5px">
+            <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                <input type="text" class="form-control" id="textSearch" onkeydown="if (event.keyCode == 13) $('#btnSearch').click()" value="{{ search }}">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="btnSearch" onclick="searchClick()">Найти</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    {% if consumers %}
+        <div class="btn-group btn-group-sm col-lg-3" style="display: inline-block;vertical-align: middle;float: none;">
+            <a class="btn btn-link {% if not consumers.has_previous %}disabled{% endif %}" href="{% if consumers.has_previous %}?page={{ consumers.previous_page_number }}{% endif %}">&larr; Предыдушый</a>
+            <a class="btn btn-link {% if not consumers.has_next %}disabled{% endif %}" href="{% if consumers.has_next %}?page={{ consumers.next_page_number }}{% endif %}">Следующий &rarr;</a>
+        </div>
+        <div class="row col-lg-3" style="display: inline-block;vertical-align: middle;float: none;">
+            <span class="text-muted">Всего объектов: {{ consumers.paginator.count }}</span>
+        </div>
+
+{#        <div class="row col-lg-3">#}
+{#            <a href="{% url 'energy:consumer_add' %}" class="btn btn-default btn-xs">Добавить потребителя</a>#}
+{#        vyjuj ntrc#}
+{#        </div>#}
+        <div class="row">
+            <table class="table text-center table-hover">
+                <tr>
+                    <th class="text-center">Лицевой счет</th>
+                    <th class="text-center">Наименование</th>
+                    <th class="text-center">РЭС</th>
+                    <th class="text-center">Участок</th>
+                    <th class="text-center">ИНН</th>
+                </tr>
+                <tbody>
+                    {% for consumer in consumers %}
+                        <tr>
+                            <td><a href="{% url 'energy:consumer' consumer.pk %}">{{ consumer.ls }}</a></td>
+                            <td>{{ consumer.name }}</td>
+                            <td>{{ consumer.production_area.power_grid_region }}</td>
+                            <td>{{ consumer.production_area }}</td>
+                            <td>{{ consumer.inn }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Записей нет</p>
+    {% endif %}
+{% endblock %}

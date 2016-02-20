@@ -1,0 +1,20 @@
+<div class="row col-lg-12">
+    <ul class="nav nav-pills">
+      <li{% if detail %} class="active"{% endif %}><a href="{% url 'energy:consumer' consumer %}">Детали</a></li>
+      <li{% if meter %} class="active"{% endif %}><a href="{% url 'energy:consumer_meters' consumer %}">Счетчики</a></li>
+      <li{% if orum %} class="active"{% endif %}><a href="{% url 'energy:consumer_orums' consumer %}">ОРУМы</a></li>
+      <li class="disabled"><a href="#">Disabled</a></li>
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Dropdown <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+</div>

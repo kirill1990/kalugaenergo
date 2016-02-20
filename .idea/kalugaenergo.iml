@@ -21,6 +21,7 @@
       <list>
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/journal/templates" />
+        <option value="$MODULE_DIR$/energy/templates" />
       </list>
     </option>
   </component>
