@@ -7,6 +7,11 @@ from period import Period
 
 
 class ProductionArea(models.Model):
+
+    class Meta:
+        verbose_name = u'Производственный участок'
+        verbose_name_plural = u'Производственные участки'
+
     title = models.CharField(
         u'Наименование участка',
         max_length=20,
