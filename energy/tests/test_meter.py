@@ -1,7 +1,7 @@
 # coding: utf8
 from django.test import TestCase
 from energy.models.period import Period
-from energy.models.power_grid_region import PowerGridRegion
+from energy.models.production_area import ProductionArea
 from energy.models.meter import Meter
 from energy.models.meter_passport import MeterPassport
 from energy.models.meter_reading import MeterReading
@@ -19,62 +19,70 @@ class TestMeter(TestCase):
     def setUp(self):
         self.periods = {x: Period.objects.get(pk=x) for x in range(1, 16)}
         self.events = {x: MeterReadingEvent.objects.get(pk=x) for x in range(1, 6)}
-        self.power_grid_region = PowerGridRegion.objects.create(title='test', current_period=self.periods[6])
+        self.power_grid_region = ProductionArea.objects.create(
+            title='test',
+            current_period=self.periods[6],
+        )
         self.passport = MeterPassport.objects.get(pk=1)
 
-        self.meter = Meter.objects.create(serial_number='1',
-                                          power_grid_region=self.power_grid_region,
-                                          passport=self.passport
-                                          )
+        self.meter = Meter.objects.create(
+            serial_number='1',
+            power_grid_region=self.power_grid_region,
+            passport=self.passport
+        )
 
         transformer = Transformer.objects.create(old_id=1, title='test', pxx=1.31, pkz=7.6, s=400)
         wire = Wire.objects.create(old_id=1, title='test', ro=1.25)
 
         self.setting_meters = {
-            1: MeterSetting.objects.create(meter=self.meter,
-                                           installation_meter_setting=self.periods[3],
-                                           removed_meter_setting=self.periods[5],
-                                           c_loss=1.1,
-                                           c_trans=1.2,
-                                           type_of_energy=0,
-                                           direction_energy=1,
-                                           meter_place=0,
-                                           ),
-            2: MeterSetting.objects.create(meter=self.meter,
-                                           installation_meter_setting=self.periods[5],
-                                           removed_meter_setting=self.periods[6],
-                                           c_loss=1.1,
-                                           c_trans=1.2,
-                                           type_of_energy=0,
-                                           direction_energy=1,
-                                           meter_place=0,
-                                           tangfi=0.9,
-                                           ),
-            3: MeterSetting.objects.create(meter=self.meter,
-                                           installation_meter_setting=self.periods[6],
-                                           removed_meter_setting=self.periods[10],
-                                           c_loss=1.1,
-                                           c_trans=1.2,
-                                           type_of_energy=0,
-                                           direction_energy=1,
-                                           meter_place=0,
-                                           cosfi=0.7,
-                                           tangfi=0.9,
-                                           transformer=transformer,
-                                           work_hours=1,
-                                           ),
-            4: MeterSetting.objects.create(meter=self.meter,
-                                           installation_meter_setting=self.periods[10],
-                                           removed_meter_setting=self.periods[12],
-                                           c_loss=1.1,
-                                           c_trans=1.2,
-                                           type_of_energy=0,
-                                           direction_energy=1,
-                                           meter_place=0,
-                                           wire=wire,
-                                           wire_length=200,
-                                           wire_voltage=2,
-                                           ),
+            1: MeterSetting.objects.create(
+                meter=self.meter,
+                installation_meter_setting=self.periods[3],
+                removed_meter_setting=self.periods[5],
+                c_loss=1.1,
+                c_trans=1.2,
+                type_of_energy=0,
+                direction_energy=1,
+                meter_place=0,
+            ),
+            2: MeterSetting.objects.create(
+                meter=self.meter,
+                installation_meter_setting=self.periods[5],
+                removed_meter_setting=self.periods[6],
+                c_loss=1.1,
+                c_trans=1.2,
+                type_of_energy=0,
+                direction_energy=1,
+                meter_place=0,
+                tangfi=0.9,
+            ),
+            3: MeterSetting.objects.create(
+                meter=self.meter,
+                installation_meter_setting=self.periods[6],
+                removed_meter_setting=self.periods[10],
+                c_loss=1.1,
+                c_trans=1.2,
+                type_of_energy=0,
+                direction_energy=1,
+                meter_place=0,
+                cosfi=0.7,
+                tangfi=0.9,
+                transformer=transformer,
+                work_hours=1,
+            ),
+            4: MeterSetting.objects.create(
+                meter=self.meter,
+                installation_meter_setting=self.periods[10],
+                removed_meter_setting=self.periods[12],
+                c_loss=1.1,
+                c_trans=1.2,
+                type_of_energy=0,
+                direction_energy=1,
+                meter_place=0,
+                wire=wire,
+                wire_length=200,
+                wire_voltage=2,
+            ),
         }
 
         MeterReading.objects.bulk_create([
