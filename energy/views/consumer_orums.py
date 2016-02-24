@@ -14,7 +14,7 @@ class ConsumerOrums(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ConsumerOrums, self).get_context_data(**kwargs)
 
-        context['period'] = self.object.production_area.power_grid_region.current_period
+        context['period'] = self.object.current_period()
 
         points = self.object.point_set.filter(
             Q(orum__installation_in_period__lte=context['period'],
