@@ -13,8 +13,8 @@ class Consumer(models.Model):
         verbose_name_plural = u'Потребители'
 
     TYPE_CHOICE = {
-        (0, 'Юридическое лицо'),
-        (1, 'Бытовой потребитель'),
+        (0, u'Юридическое лицо'),
+        (1, u'Бытовой потребитель'),
     }
     type = models.IntegerField(
         verbose_name=u'Тип потербителя',
