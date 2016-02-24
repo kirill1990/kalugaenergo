@@ -7,6 +7,11 @@ __author__ = 'Demyanov Kirill'
 
 
 class Consumer(models.Model):
+
+    class Meta:
+        verbose_name = u'Потребитель'
+        verbose_name_plural = u'Потребители'
+
     TYPE_CHOICE = {
         (0, 'Юридическое лицо'),
         (1, 'Бытовой потребитель'),
