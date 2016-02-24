@@ -28,6 +28,7 @@ class Meter(models.Model):
     )
     production_area = models.ForeignKey(
         ProductionArea,
+        null=True
     )
     date_created = models.DateField(
         u'Дата изготовления',
