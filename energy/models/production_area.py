@@ -3,12 +3,22 @@
 __author__ = 'Demyanov Kirill'
 
 from django.db import models
-from power_grid_region import PowerGridRegion
+from period import Period
 
 
 class ProductionArea(models.Model):
-    title = models.CharField('Наименование участка', max_length=20)
-    power_grid_region = models.ForeignKey(PowerGridRegion)
+    title = models.CharField(
+        u'Наименование участка',
+        max_length=20,
+    )
+    parent = models.ForeignKey(
+        'self'
+    )
+    current_period = models.ForeignKey(
+        Period,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.title

@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import Sum, Q
 from decimal import Decimal
 from meter_passport import MeterPassport
-from power_grid_region import PowerGridRegion
+from production_area import ProductionArea
 # from period import Period
 # from meter_reading import MeterReading
 
@@ -26,8 +26,8 @@ class Meter(models.Model):
     passport = models.ForeignKey(
         MeterPassport,
     )
-    power_grid_region = models.ForeignKey(
-        PowerGridRegion,
+    production_area = models.ForeignKey(
+        ProductionArea,
     )
     date_created = models.DateField(
         u'Дата изготовления',

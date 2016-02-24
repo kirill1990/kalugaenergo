@@ -1,7 +1,4 @@
 # coding: utf8
-from energy.models.network_organization import NetworkOrganization
-from energy.models.production_department import ProductionDepartment
-from energy.models.power_grid_region import PowerGridRegion
 from energy.models.production_area import ProductionArea
 
 from energy.models.period import Period
