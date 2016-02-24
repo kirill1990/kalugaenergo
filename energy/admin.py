@@ -4,8 +4,8 @@ from django.contrib import admin
 from energy.models import Consumer, \
     Meter, \
     OrumType, Orum, OrumDateUse, Period, \
-    ProductionArea, PowerGridRegion, Point, \
-    NetworkOrganization, ProductionDepartment, PointMeter, \
+    ProductionArea, Point, \
+    PointMeter, \
     OrumSetting, OrumCorrection, MeterPassport, \
     MeterReading, MeterCorrection, MeterReadingEvent, \
     Transformer, Wire
@@ -30,7 +30,7 @@ class PointAdmin(admin.ModelAdmin):
     list_display = ['title', 'value']
     search_fields = ['number_in_t2']
 
-class PowerGridRegionAdmin(admin.ModelAdmin):
+class ProductionAreaAdmin(admin.ModelAdmin):
     list_display = ['title', 'current_period']
 
 
@@ -58,11 +58,8 @@ admin.site.register(OrumType)
 # admin.site.register(OrumDateUse)
 admin.site.register(Meter)
 admin.site.register(Period)
-admin.site.register(ProductionArea)
-admin.site.register(PowerGridRegion, PowerGridRegionAdmin)
+admin.site.register(ProductionArea, ProductionAreaAdmin)
 admin.site.register(Point, PointAdmin)
-admin.site.register(NetworkOrganization)
-admin.site.register(ProductionDepartment)
 admin.site.register(PointMeter)
 admin.site.register(MeterPassport, MeterPassportAdmin)
 admin.site.register(MeterReading)

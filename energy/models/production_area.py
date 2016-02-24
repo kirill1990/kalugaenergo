@@ -12,7 +12,9 @@ class ProductionArea(models.Model):
         max_length=20,
     )
     parent = models.ForeignKey(
-        'self'
+        'self',
+        null=True,
+        blank=True,
     )
     current_period = models.ForeignKey(
         Period,
