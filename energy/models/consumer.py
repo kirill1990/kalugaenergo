@@ -1,26 +1,18 @@
 # coding: utf8
-from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from production_area import ProductionArea
+from point import Point
+from time import Time
 
 __author__ = 'Demyanov Kirill'
 
 
-class Consumer(models.Model):
+class Consumer(Time):
 
     class Meta:
-        verbose_name = u'Потребителя'
-        verbose_name_plural = u'Потребители'
+        abstract = True
 
-    TYPE_CHOICE = {
-        (0, u'Юридическое лицо'),
-        (1, u'Бытовой потребитель'),
-    }
-    type = models.IntegerField(
-        verbose_name=u'Тип потербителя',
-        choices=TYPE_CHOICE,
-        null=False,
-    )
     production_area = models.ForeignKey(
         ProductionArea,
         verbose_name=u'Производственный участок',
@@ -36,33 +28,28 @@ class Consumer(models.Model):
         u'Лицевой счет',
         max_length=10,
     )
-    name = models.CharField(
+    title = models.CharField(
         u'Наименование потребителя',
         max_length=160,
+    )
+    points = GenericRelation(
+        Point,
     )
     inn = models.CharField(
         u'ИНН',
         max_length=20,
         blank=True,
     )
-    kpp = models.CharField(
-        u'КПП',
-        max_length=20,
-        blank=True,
-    )
+    # points = models.ManyToManyField(
+    #     Point,
+    #     related_name="%(app_label)s_%(class)s_related",
+    # )
 
     def __str__(self):
-        return '%s: %s' % (self.ls, self.name)
+        return '%s: %s' % (self.ls, self.title)
 
     def __unicode__(self):
         return u"%s" % self.__str__()
-    
-    def test(self):
-        self.point_set.count()
-        pass
 
     def current_period(self):
-        return self.production_area.power_grid_region.current_period
-
-    def get_absolute_url(self):
-        return reverse('energy:consumer', kwargs={'pk': self.id})
+        return self.production_area.current_period

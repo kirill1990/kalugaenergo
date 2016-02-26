@@ -1,0 +1,79 @@
+{% extends 'energy/base.html' %}
+
+{% block title  %}
+    Юридические потребители
+{% endblock %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "Юридические потребители" "energy:legals" %}
+{% endblock %}
+
+{% block content %}
+    {% render_breadcrumbs %}
+
+    <script type= "text/javascript">
+        function searchClick()
+        {
+            var url = document.getElementById('textSearch');
+            var search = '';
+            if (url.value){
+                search = '?search=' + url.value;
+            }
+            document.location.search = search;
+        }
+    </script>
+    {% if legals %}
+        <div class="row col-lg-12" style="margin: 5px; ">
+            <div class="row col-lg-6" style="display: inline-block;vertical-align: middle;float: none;">
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                    <input type="text" class="form-control" id="textSearch" onkeydown="if (event.keyCode == 13) $('#btnSearch').click()" value="{{ search }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="btnSearch" onclick="searchClick()">Найти</button>
+                    </span>
+                </div>
+            </div>
+{#            <div class="row col-lg-6">#}
+                <div class="col-lg-3" style="display: inline-block;vertical-align: middle;float: none;">
+                    <span class="text-muted">Всего объектов: {{ legals.paginator.count }}</span>
+                </div>
+{#            display: inline-block;vertical-align: middle;float: none;#}
+{#            </div>#}
+        </div>
+
+{#        <div class="row col-lg-3">#}
+{#            <a href="{% url 'energy:consumer_add' %}" class="btn btn-default btn-xs">Добавить потребителя</a>#}
+{#        vyjuj ntrc#}
+{#        </div>#}
+        <div class="row">
+            <table class="table text-center table-hover">
+                <tr>
+                    <th class="text-center">Лицевой счет</th>
+                    <th class="text-center">Наименование</th>
+                    <th class="text-center">Участок</th>
+                    <th class="text-center">ИНН</th>
+                </tr>
+                <tbody>
+                    {% for legal in legals %}
+                        <tr>
+                            <td><a href="{% url 'energy:legal_detail' legal.pk %}">{{ legal.ls }}</a></td>
+                            <td>{{ legal.title }}</td>
+                            <td>{{ legal.production_area }}</td>
+                            <td>{{ legal.inn }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="btn-group btn-group-sm col-lg-12">
+{#                <div class=""#}
+                <a class="btn btn-link {% if not legals.has_previous %}disabled{% endif %}" href="{% if legals.has_previous %}?page={{ legals.previous_page_number }}{% endif %}">&larr; Предыдушый</a>
+                <a class="btn btn-link {% if not legals.has_next %}disabled{% endif %}" href="{% if legals.has_next %}?page={{ legals.next_page_number }}{% endif %}">Следующий &rarr;</a>
+            </div>
+        </div>
+    {% else %}
+        <p>Записей нет</p>
+    {% endif %}
+{% endblock %}

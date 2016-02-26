@@ -2,18 +2,18 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView
 from django.db.models import Q
-from energy.models import Consumer
-from energy.forms import ConsumerForm
+from energy.models import Legal
+from energy.forms import LegalForm
 
 __author__ = 'Demyanov Kirill'
 
 
-class ConsumerDetail(DetailView):
-    model = Consumer
-    template_name = 'energy/consumer.html'
+class LegalDetail(DetailView):
+    model = Legal
+    template_name = 'energy/legal_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ConsumerDetail, self).get_context_data(**kwargs)
+        context = super(LegalDetail, self).get_context_data(**kwargs)
 
         context['period'] = self.object.current_period()
 
@@ -23,9 +23,9 @@ class ConsumerDetail(DetailView):
         #     | Q(orum__installation_in_period__lte=context['period'],
         #         orum__removed_in_period__isnull=True)
         # )
-
+        #
         # points = self.object.point_set.all()
-
+        #
         # paginator = Paginator(points, 25)
         # page = self.request.GET.get('page')
         # try:
@@ -35,9 +35,9 @@ class ConsumerDetail(DetailView):
         # except EmptyPage:
         #     points = paginator.page(paginator.num_pages)
         # context['points'] = points
-
+        #
         # context['points'] = context['object'].point_set.all()
 
-        context['form'] = ConsumerForm
+        context['form'] = LegalForm
 
         return context

@@ -2,13 +2,13 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import DetailView
 from django.db.models import Q
-from energy.models import Consumer
+from energy.models import Legal
 
 __author__ = 'Demyanov Kirill'
 
 
 class ConsumerOrums(DetailView):
-    model = Consumer
+    model = Legal
     template_name = 'energy/consumer_orums.html'
 
     def get_context_data(self, **kwargs):

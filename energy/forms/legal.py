@@ -1,19 +1,19 @@
 # coding:utf8
 from django import forms
-from energy.models import Consumer
+from energy.models import Legal
 
 __author__ = 'Demyanov Kirill'
 
 
-class ConsumerForm(forms.ModelForm):
+class LegalForm(forms.ModelForm):
     class Meta:
-        model = Consumer
+        model = Legal
         exclude = ['old_id']
         widgets = {
             'ls': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': '100010',
+                    'placeholder': '100125',
                 }
             ),
             'name': forms.TextInput(
@@ -32,11 +32,6 @@ class ConsumerForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': '773301001',
-                }
-            ),
-            'type': forms.Select(
-                attrs={
-                    'class': 'form-control'
                 }
             ),
             'production_area': forms.Select(

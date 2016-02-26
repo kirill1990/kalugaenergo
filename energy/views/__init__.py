@@ -1,8 +1,8 @@
-from energy.views.consumers import Consumers
+from energy.views.legals import Legals
 from energy.views.consumer_orums_refresh import OrumRefresh
 from energy.views.consumer_orums_update_date_use import OrumUpdateDateUse
 
-from energy.views.consumer import ConsumerDetail
+from energy.views.legal_detail import LegalDetail
 from energy.views.consumer_create import ConsumerCreate
 
 from energy.views.meter_list import MeterList

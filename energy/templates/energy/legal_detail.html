@@ -8,12 +8,12 @@
 
 {% block breadcrumbs %}
     {{ block.super }}
-    {% breadcrumb consumer.title "energy:consumer" consumer.pk  %}
+    {% breadcrumb 'Детали' "energy:legal_detail" %}
 {% endblock %}
 
 {% block content %}
     {% render_breadcrumbs %}
-    {% include 'energy/consumer_include_tabs.html' with consumer=consumer.pk detail=1 %}
+    {% include 'energy/consumer_include_tabs.html' with legal=legal.pk detail=1 %}
     {% include 'energy/include_current_period.html' with title=period.title %}
 
 

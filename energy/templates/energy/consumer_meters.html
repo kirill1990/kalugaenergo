@@ -1,10 +1,18 @@
-{% extends 'energy/base.html' %}
+{% extends 'energy/consumer.html' %}
 
 {% block title  %}
     {{ object }}
 {% endblock %}
 
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% breadcrumb "Счётчики" "energy:consumer_meters" consumer.pk %}
+{% endblock %}
+
 {% block content %}
+    {% render_breadcrumbs %}
     {% include 'energy/consumer_include_tabs.html' with consumer=consumer.pk meter=1 %}
     {% include 'energy/include_current_period.html' with title=period.title %}
     <script>

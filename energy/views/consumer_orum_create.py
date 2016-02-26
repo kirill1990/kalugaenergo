@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import View
 
 from energy.forms import OrumSettingForm, PointForm
-from energy.models import Consumer, Orum, Point, OrumSetting
+from energy.models import Legal, Orum, Point, OrumSetting
 
 __author__ = 'Demyanov Kirill'
 

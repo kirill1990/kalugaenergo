@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'django.contrib.admindocs',
+    'django_bootstrap_breadcrumbs',
     'journal',
     'energy',
 )
@@ -54,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'kalugaenergo.util.require_login_middleware.RequireLoginMiddleware'
 )
 
 ROOT_URLCONF = 'kalugaenergo.urls'
@@ -69,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
             ],
         },
     },
@@ -131,3 +134,12 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(_PATH, 'media')
 MEDIA_URL = '/media/'
+
+AUTH_USER_MODEL = 'energy.CustomUser'
+
+LOGIN_REQUIRED_URLS = (
+    r'/energy',
+)
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+)

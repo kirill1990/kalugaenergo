@@ -2,13 +2,13 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
-from energy.forms import ConsumerForm
+from energy.forms import LegalForm
 
 __author__ = 'Demyanov Kirill'
 
 class ConsumerCreate(CreateView):
     template_name = 'energy/consumer_add.html'
-    form_class = ConsumerForm
+    form_class = LegalForm
     # success_url = 'energy/'
 
     # def get_success_url(self):

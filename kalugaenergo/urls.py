@@ -17,6 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import login, logout
 
 
 urlpatterns = [
@@ -24,4 +26,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^journal/', include('journal.urls', namespace='journal')),
     url(r'^energy/', include('energy.urls', namespace='energy')),
+
+    url(r'^accounts/login/',  login, kwargs={'template_name': 'login.html'}, name='login'),
+    url(r'^accounts/logout/', logout, kwargs={'next_page': 'login'}, name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
